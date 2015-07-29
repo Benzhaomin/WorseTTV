@@ -17,9 +17,9 @@
 }
 
 /* add some padding at the very bottom to fix the auto-scrolling */
-ul.chat-lines div:last-child {
+/*ul.chat-lines div:last-child {
   margin-bottom: 30px;
-}
+}*/
 
 /* only show the first letter of usernames */
 li.ember-view.message-line.chat-line span.from {
