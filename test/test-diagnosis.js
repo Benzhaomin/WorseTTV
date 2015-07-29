@@ -1,6 +1,6 @@
 var main = require("../");
 
-var diagnosis = require("../data/diagnosis");
+var diagnosis = require("../lib/diagnosis");
 
 exports["test diagnose"] = function(assert) {
   
