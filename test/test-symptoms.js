@@ -9,10 +9,11 @@ exports["test MinimumWordCount"] = function(assert) {
   assert.ok(!minWords.exhibited_by("two words"), "enough words");
 };
 
-exports["test CapsRatio"] = function(assert) {
+exports["test MaximumCapsRatio"] = function(assert) {
   
-  var capsRatio = symptoms.CapsRatio(0.4);
+  var capsRatio = symptoms.MaximumCapsRatio(0.4);
   assert.ok(capsRatio.exhibited_by("ALL CAPS ALL DAY"), "all caps");
+  assert.ok(capsRatio.exhibited_by("CAPS ResidentSleeper"), "all caps + emote");
   assert.ok(!capsRatio.exhibited_by("Proper casing"), "proper casing");
 };
 
