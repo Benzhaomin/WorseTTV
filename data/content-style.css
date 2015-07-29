@@ -1,7 +1,9 @@
 
 /* hide chat lines by default */
 .ember-chat .chat-messages .chat-line {
-  display: none;  
+  display: none;
+  line-height: 18px;
+  padding: 3px 20px;
 }
 
 /* hide cancerous chat lines */
@@ -32,11 +34,3 @@ li.ember-view.message-line.chat-line span.from {
 li.ember-view.message-line.chat-line span.message img.emoticon {
   display: none;
 }
-
-
-line-height: 20px;
-padding: 6px 20px;
-margin: -3px 0px;
-word-wrap: break-word;
-list-style-position: unset;
-overflow: hidden;
