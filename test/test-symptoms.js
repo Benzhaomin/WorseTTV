@@ -16,4 +16,11 @@ exports["test CapsRatio"] = function(assert) {
   assert.ok(!capsRatio.exhibited_by("Proper casing"), "proper casing");
 };
 
+exports["test MaximumEmoteCount"] = function(assert) {
+  
+  var maxEmotes = symptoms.MaximumEmoteCount(1);
+  assert.ok(maxEmotes.exhibited_by("Kappa Kappa"), "zwei kappa");
+  assert.ok(!maxEmotes.exhibited_by("Kappa"), "eins kappa");
+};
+
 require("sdk/test").run(exports);
