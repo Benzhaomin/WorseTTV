@@ -23,11 +23,15 @@ ul.chat-lines div:last-child {
 
 /* only show the first letter of usernames */
 li.ember-view.message-line.chat-line span.from {
-  width: 12px;
+  width: 18px;
   height: 18px;
   overflow: hidden;
   display: block;
   float: left;
+  font: monospace;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: grey !important;
 }
 
 /* hide all emotes */
