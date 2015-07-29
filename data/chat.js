@@ -1,7 +1,5 @@
 
-var WorseTTV = WorseTTV || {};
-
-WorseTTV.chat = {
+var chat = module.exports = {
   
   on_message: function(callback) {
     var callthis = callback;

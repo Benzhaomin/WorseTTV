@@ -1,8 +1,5 @@
-var {Cc, Ci} = require("chrome");
 
-var WorseTTV = WorseTTV || {};
-
-WorseTTV.symptoms = {
+var symptoms = module.exports = {
   
   // message must have a minimum of {count} words
   MinimumWordCount: function(count) {
@@ -14,5 +11,3 @@ WorseTTV.symptoms = {
   },
   
 }
-
-exports.MinimumWordCount = WorseTTV.symptoms.MinimumWordCount;

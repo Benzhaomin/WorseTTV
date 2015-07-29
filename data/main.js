@@ -1,13 +1,15 @@
 
-var WorseTTV = WorseTTV || {};
+chat = require('./chat')
+emotes = require('./emotes')
+diagnosis = require('./diagnosis')
 
-WorseTTV.chat.on_message(function(node) {
+chat.on_message(function(node) {
   //console.log("will process", node.innerHTML);
   
   message = node.querySelector('span.message');
-  text = WorseTTV.emotes.to_plain(message);
+  text = emotes.to_plain(message);
   
-  if (!WorseTTV.diagnosis.is_sane(text)) {
+  if (!diagnosis.is_sane(text)) {
     node.style = "font-size: 8px;";
     message.innerHTML = text;
     

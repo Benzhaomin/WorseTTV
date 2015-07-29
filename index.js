@@ -11,4 +11,4 @@ var pageMod = mod.PageMod({
     "./main.js"]
 })
 
-tabs.open("http://www.twitch.tv/gamesdonequick")
+//tabs.open("http://www.twitch.tv/gamesdonequick")

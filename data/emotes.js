@@ -1,7 +1,5 @@
 
-var WorseTTV = WorseTTV || {};
-
-WorseTTV.emotes = {
+var emotes = module.exports = {
   
   // replace emotes <img> by plain text
   to_plain: function(node) {
