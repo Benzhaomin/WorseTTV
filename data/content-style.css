@@ -1,0 +1,42 @@
+
+/* hide chat lines by default */
+.ember-chat .chat-messages .chat-line {
+  display: none;  
+}
+
+/* hide cancerous chat lines */
+.ember-chat .chat-messages div.ill .chat-line {
+  display: none;
+}
+
+/* show sane chat lines */
+.ember-chat .chat-messages div.sane .chat-line {
+  display: block;
+}
+
+/* add some padding at the very bottom to fix the auto-scrolling */
+ul.chat-lines div:last-child {
+  margin-bottom: 30px;
+}
+
+/* only show the first letter of usernames */
+li.ember-view.message-line.chat-line span.from {
+  width: 12px;
+  height: 18px;
+  overflow: hidden;
+  display: block;
+  float: left;
+}
+
+/* hide all emotes */
+li.ember-view.message-line.chat-line span.message img.emoticon {
+  display: none;
+}
+
+
+line-height: 20px;
+padding: 6px 20px;
+margin: -3px 0px;
+word-wrap: break-word;
+list-style-position: unset;
+overflow: hidden;
