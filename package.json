@@ -1,13 +1,14 @@
 {
   "title": "Worse TwitchTV",
   "name": "worsettv",
+  "author": "ben",
+  "id": "ben@wainei.net",
   "version": "0.0.1",
   "description": "Remove the fun from TwitchTV chat rooms",
   "main": "index.js",
-  "author": "Ben Gourion",
   "engines": {
     "firefox": ">=38.0a1",
     "fennec": ">=38.0a1"
   },
-  "license": "MIT"
+  "license": "MPL 2.0"
 }

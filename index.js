@@ -1,9 +1,14 @@
-var self = require('sdk/self');
+var self = require("sdk/self");
+var tabs = require("sdk/tabs");
+var mod = require("sdk/page-mod");
 
-// a dummy function, to show how tests work.
-// to see how to test this function, look at test/test-index.js
-function dummy(text, callback) {
-  callback(text);
-}
+var pageMod = mod.PageMod({
+  include: "http://www.twitch.tv/*",
+  contentScriptFile: [
+    "./chat.js",
+    "./diagnosis.js",
+    "./emotes.js",
+    "./main.js"]
+})
 
-exports.dummy = dummy;
+tabs.open("http://www.twitch.tv/gamesdonequick")
