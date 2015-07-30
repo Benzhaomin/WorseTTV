@@ -21,16 +21,16 @@ var pageMod = mod.PageMod({
   contentStyleFile: "./content-style.css",
   attachTo: 'top',
   onAttach: function(worker) {
-    
+
     // keep track of page workers so that the UI can talk to them
     array.add(pageWorkers, worker);
     worker.on('pageshow', function() { array.add(pageWorkers, this); });
     worker.on('pagehide', function() { array.remove(pageWorkers, this); });
     worker.on('detach', function() { array.remove(pageWorkers, this); });
-    
+
     // listen to diagnosis requests
     worker.port.on('worsettv.chat.message.diagnose', function(node, text) {
-      
+
       //console.log('diagnosis request for text', text, 'on node', node);
 
       if (diagnosis.is_sane(text)) {
@@ -49,23 +49,23 @@ var menu = cm.Item({
   label: "Cure Cancer",
   image: self.data.url("img/kappa-pride.png"),
   accesskey: 'U',
-  
+
   contentScriptFile: "./firefox-ui.js",
-  
+
   // react to clicks on the menu
   onMessage: function(start) {
     for (var index = 0; index < pageWorkers.length; index += 1) {
       if (pageWorkers[index].tab === tabs.activeTab) {
         if (start == true) {
           pageWorkers[index].port.emit('worsettv.chat.observer.start');
-          
+
           // curing is now On
           this.label = "Restore Cancer";
           this.image = self.data.url("img/kappa.png");
         }
         else {
           pageWorkers[index].port.emit('worsettv.chat.observer.stop');
-          
+
           // curing is now Off
           this.label = "Cure Cancer";
           this.image = self.data.url("img/kappa-pride.png");
@@ -75,4 +75,4 @@ var menu = cm.Item({
   },
 });
 
-tabs.open("http://www.twitch.tv/gamesdonequick");
+//tabs.open("http://www.twitch.tv/gamesdonequick");
