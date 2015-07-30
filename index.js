@@ -45,22 +45,34 @@ var pageMod = mod.PageMod({
 
 // custom context menu item on Twitch's chatbox
 var menu = cm.Item({
-  label: "Cure cancer",
+  // curing is off by default
+  label: "Cure Cancer",
+  image: self.data.url("img/kappa-pride.png"),
+  accesskey: 'U',
+  
   contentScriptFile: "./firefox-ui.js",
+  
+  // react to clicks on the menu
   onMessage: function(start) {
     for (var index = 0; index < pageWorkers.length; index += 1) {
       if (pageWorkers[index].tab === tabs.activeTab) {
         if (start == true) {
-          this.label = "Restore cancer";
           pageWorkers[index].port.emit('worsettv.chat.observer.start');
+          
+          // curing is now On
+          this.label = "Restore Cancer";
+          this.image = self.data.url("img/kappa.png");
         }
         else {
-          this.label = "Cure cancer";
           pageWorkers[index].port.emit('worsettv.chat.observer.stop');
+          
+          // curing is now Off
+          this.label = "Cure Cancer";
+          this.image = self.data.url("img/kappa-pride.png");
         }
       }
     }
   },
 });
 
-//tabs.open("http://www.twitch.tv/gamesdonequick");
+tabs.open("http://www.twitch.tv/gamesdonequick");
