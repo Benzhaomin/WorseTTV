@@ -18,7 +18,7 @@ function startListening(worker) {
   
   worker.port.on('worsettv.diagnose', function(node, text) {
     
-    console.log('diagnosis request for text', text, 'on node', node);
+    //console.log('diagnosis request for text', text, 'on node', node);
 
     if (diagnosis.diagnose(text).length > 0) {
       worker.port.emit('worsettv.ill', node, text);
