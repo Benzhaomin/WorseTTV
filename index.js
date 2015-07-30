@@ -6,8 +6,8 @@ var diagnosis = require("./lib/diagnosis");
 var pageMod = mod.PageMod({
   include: "http://www.twitch.tv/*",
   contentScriptFile: [
-    "./content-script.js",
-    "./firefox-content-script.js",
+    "./chat.js",
+    "./firefox-chat.js",
   ],
   contentStyleFile: "./content-style.css",
   attachTo: 'top',
