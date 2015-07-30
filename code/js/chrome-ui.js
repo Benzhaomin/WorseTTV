@@ -1,35 +1,31 @@
 
+var contextMenu;
 var started = false;
 
-// shot the menu on right clicks inside the chat
-/*self.on("context", function (node) {
-  var chatbox = document.querySelector(".ember-chat");
-  return chatbox != null && chatbox.contains(node);
-});*/
+var onContextMenuClicked = function(info, tab) {
 
-chrome.browserAction.onClicked.addListener(function(tab) {
+  started = !started;
 
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  if (started === true) {
+    console.log("[chrome-ui] started curing");
+    chrome.tabs.sendMessage(tab.id, {"message": "worsettv.chat.observer.start"});
 
-    var activeTab = tabs[0];
+    // curing is now On
+    chrome.contextMenus.update(contextMenu, {"title": "Restore Cancer"});
+  }
+  else {
+    console.log("[chrome-ui] stopped curing");
+    chrome.tabs.sendMessage(tab.id, {"message": "worsettv.chat.observer.stop"});
 
-    started = !started;
+    // curing is now Off
+    chrome.contextMenus.update(contextMenu, {"title": "Cure Cancer"});
+  }
 
-    if (started === true) {
-      console.log("started curing");
-      chrome.tabs.sendMessage(activeTab.id, {"message": "worsettv.chat.observer.start"});
 
-      // curing is now On
-      //this.label = "Restore Cancer";
-      //this.image = self.data.url("img/kappa.png");
-    }
-    else {
-      console.log("stopped curing");
-      chrome.tabs.sendMessage(activeTab.id, {"message": "worsettv.chat.observer.stop"});
+};
 
-      // curing is now Off
-      //this.label = "Cure Cancer";
-      //this.image = self.data.url("img/kappa-pride.png");
-    }
-  });
+contextMenu = chrome.contextMenus.create({
+  "title": "Cure Cancer",
+  "contexts":["page"],
+  "onclick": onContextMenuClicked
 });

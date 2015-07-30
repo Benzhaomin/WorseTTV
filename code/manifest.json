@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "icons": { "128": "images/icon-128.png" },
-  "browser_action": {
-    "default_icon": "images/icon-48.png"
+  "icons": {
+    "16": "images/kappa-pride.png",
+    "128": "images/icon-128.png"
   },
   "content_scripts": [{
       "matches": [
@@ -21,7 +21,10 @@
       "js/chrome-ui.js"
     ]
   },
-  "permissions": ["http://www.twitch.tv/*"],
+  "permissions": [
+    "http://www.twitch.tv/*",
+    "contextMenus"
+  ],
   "web_accessible_resources": [ "js/*", "html/*", "css/*", "images/*" ],
   "content_security_policy": "script-src 'self'; object-src 'self'"
 }
