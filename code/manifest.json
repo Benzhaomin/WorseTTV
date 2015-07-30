@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "icons": { "128": "images/icon-128.png" },
+  "browser_action": {
+    "default_icon": "images/icon-48.png"
+  },
+  "content_scripts": [{
+      "matches": [
+        "http://www.twitch.tv/*"
+      ],
+      "css": [
+        "css/content.css"
+      ],
+      "js": [
+        "js/chat.js",
+        "js/chrome-chat.js"
+      ]
+  }],
+  "background": {
+    "scripts": [
+      "js/chrome-background.js",
+      "js/chrome-ui.js"
+    ]
+  },
+  "permissions": ["http://www.twitch.tv/*"],
+  "web_accessible_resources": [ "js/*", "html/*", "css/*", "images/*" ],
+  "content_security_policy": "script-src 'self'; object-src 'self'"
+}
