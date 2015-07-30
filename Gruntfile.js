@@ -9,8 +9,7 @@ module.exports = function(grunt) {
   for (var i = 0; i < files.length; i++) {
     file = files[i];
 
-    if (file.indexOf('firefox-background') !== -1) { continue; }
-    if (file.indexOf('firefox-ui') !== -1) { continue; }
+    if (file.indexOf('firefox') !== -1) { continue; }
     fileMaps.browserify['build/unpacked-dev/js/' + file] = 'code/js/' + file;
     fileMaps.uglify['build/unpacked-prod/js/' + file] = 'build/unpacked-dev/js/' + file;
   }
@@ -21,7 +20,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
 
-    clean: ['build/unpacked-dev', 'build/unpacked-prod', 'build/*.crx'],
+    clean: ['build/unpacked-dev', 'build/unpacked-prod', 'build/*.crx', 'build/*.xpi'],
 
     mkdir: {
       unpacked: { options: { create: ['build/unpacked-dev', 'build/unpacked-prod'] } },
@@ -35,18 +34,29 @@ module.exports = function(grunt) {
     },
 
     copy: {
+
+      // Chrome: copy everything except JS (which are browserified)
       main_chrome: { files: [ {
           expand: true,
           cwd: 'code/',
-          src: ['**', '!js/**', '!**/*.md'],
+          src: ['**', '!js/**', '!**/*.md', '!package.json', '!images/logo-source.png',],
           dest: 'build/unpacked-dev/'
       } ] },
+      prod_chrome: { files: [ {
+        expand: true,
+        cwd: 'build/unpacked-dev/',
+        src: ['**', '!js/*.js'],
+        dest: 'build/unpacked-prod/'
+      } ] },
+
+      // Firefox: copy everything except Chrome files, to a data/ sub-dir
       main_firefox: { files: [ {
           expand: true,
           cwd: 'code/',
-          src: ['**', '!**/*.md'],
+          src: ['**', '!images/icon.png', '!images/logo-source.png', '!manifest.json', '!js/chrome**.js', '!**/*.md'],
           dest: 'build/unpacked-dev/data/'
         },
+        // move icon.png to the root (jpm bug)
         {
           expand: true,
           cwd: 'code/images/',
@@ -54,12 +64,6 @@ module.exports = function(grunt) {
           dest: 'build/unpacked-dev/'
         } ]
       },
-      prod_chrome: { files: [ {
-        expand: true,
-        cwd: 'build/unpacked-dev/',
-        src: ['**', '!js/*.js'],
-        dest: 'build/unpacked-prod/'
-      } ] },
       prod_firefox: { files: [ {
         expand: true,
         cwd: 'build/unpacked-dev/',
@@ -170,7 +174,7 @@ module.exports = function(grunt) {
   //
   // Firefox build
   //
-  grunt.registerTask('firefox', ['clean', 'test', 'mkdir:unpacked', 'browserify', 'copy:main_firefox', 'manifest:firefox',
+  grunt.registerTask('firefox', ['clean', 'test', 'mkdir:unpacked', 'copy:main_firefox', 'manifest:firefox',
      'copy:prod_firefox', 'jpm:xpi']);
 
 };
