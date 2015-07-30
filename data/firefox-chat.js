@@ -18,5 +18,9 @@ self.port.on("worsettv.chat.observer.start", function() {
 });
 
 self.port.on("worsettv.chat.observer.stop", function() {
-  worsettv.chat.observer.stop(on_message);
+  worsettv.chat.observer.stop();
+});
+
+self.port.on("detach", function() {
+  worsettv.chat.observer.stop();
 });
