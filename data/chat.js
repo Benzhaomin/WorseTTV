@@ -57,7 +57,7 @@ worsettv.chat = (function () {
       
     // abort if there's no chat to observe
     if (document.querySelector('.chat-lines') == null) {
-      console.log("[chat.js] nothing to be observer on", document.title, document.URL);
+      console.log("[chat] nothing to be observed on", document.title, document.URL);
       return;
     }
     
@@ -85,7 +85,7 @@ worsettv.chat = (function () {
     // abort on bogus nodess
     if (!node) return;
     
-    node.className = node.className + " ill";
+    node.classList.add("ill");
     //console.log("cancer cured:", text);
   };
   
@@ -96,7 +96,7 @@ worsettv.chat = (function () {
     // abort on bogus nodess
     if (!node) return;
     
-    node.className = node.className + " sane";
+    node.classList.add("sane");
   };
   
   // public API
@@ -105,8 +105,10 @@ worsettv.chat = (function () {
       start: start_observing,
       stop: stop_observing,
     },
-    ill_message: ill_message,
-    sane_message: sane_message,
+    message: {
+      ill: ill_message,
+      sane: sane_message,
+    },
   };
 
 })();
