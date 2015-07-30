@@ -1,6 +1,7 @@
 chrome-key.pem
 node_modules
 build/*.crx
+build/*.xpi
 build/unpacked-dev
 build/unpacked-prod
 *.swp

@@ -8,6 +8,9 @@ module.exports = function(grunt) {
   var file, files = grunt.file.expand({cwd:'code/js'}, ['*.js']);
   for (var i = 0; i < files.length; i++) {
     file = files[i];
+
+    if (file.indexOf('firefox-background') !== -1) { continue; }
+    if (file.indexOf('firefox-ui') !== -1) { continue; }
     fileMaps.browserify['build/unpacked-dev/js/' + file] = 'code/js/' + file;
     fileMaps.uglify['build/unpacked-prod/js/' + file] = 'build/unpacked-dev/js/' + file;
   }
@@ -32,16 +35,35 @@ module.exports = function(grunt) {
     },
 
     copy: {
-      main: { files: [ {
-        expand: true,
-        cwd: 'code/',
-        src: ['**', '!js/**', '!**/*.md'],
-        dest: 'build/unpacked-dev/'
+      main_chrome: { files: [ {
+          expand: true,
+          cwd: 'code/',
+          src: ['**', '!js/**', '!**/*.md'],
+          dest: 'build/unpacked-dev/'
       } ] },
-      prod: { files: [ {
+      main_firefox: { files: [ {
+          expand: true,
+          cwd: 'code/',
+          src: ['**', '!**/*.md'],
+          dest: 'build/unpacked-dev/data/'
+        },
+        {
+          expand: true,
+          cwd: 'code/images/',
+          src: ['icon.png'],
+          dest: 'build/unpacked-dev/'
+        } ]
+      },
+      prod_chrome: { files: [ {
         expand: true,
         cwd: 'build/unpacked-dev/',
         src: ['**', '!js/*.js'],
+        dest: 'build/unpacked-prod/'
+      } ] },
+      prod_firefox: { files: [ {
+        expand: true,
+        cwd: 'build/unpacked-dev/',
+        src: ['**'],
         dest: 'build/unpacked-prod/'
       } ] }
     },
@@ -75,6 +97,13 @@ module.exports = function(grunt) {
                 'code/**/*.json', '!code/js/libs/*'],
         tasks: ['test']
       }
+    },
+
+    jpm: {
+      options: {
+        src: "./build/unpacked-prod/",
+        xpi: "./build/"
+      }
     }
 
   });
@@ -87,26 +116,36 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-jpm-modern');
 
   //
   // custom tasks
   //
 
   grunt.registerTask(
-    'manifest', 'Extend Chrome\'s manifest.json and Firefox\'s package.json with extra fields from the root package.json',
+    'manifest:chrome', 'Extend Chrome\'s manifest.json with extra fields from the root package.json',
     function() {
-      var fields = ['author', 'name', 'version', 'description'];
+      var fields = ['author', 'name', 'license', 'version', 'description'];
       for (var i = 0; i < fields.length; i++) {
         var field = fields[i];
         chrome_manifest[field] = pkg[field];
-        firefox_package[field] = pkg[field];
       }
 
       chrome_manifest.name = pkg.title;
-      firefox_package.title = pkg.title;
 
       grunt.file.write('build/unpacked-dev/manifest.json', JSON.stringify(chrome_manifest, null, 4) + '\n');
       grunt.log.ok('chrome manifest.json generated');
+    }
+  );
+
+  grunt.registerTask(
+    'manifest:firefox', 'Extend Firefox\'s package.json with extra fields from the root package.json',
+    function() {
+      var fields = ['title', 'author', 'name', 'license', 'version', 'description'];
+      for (var i = 0; i < fields.length; i++) {
+        var field = fields[i];
+        firefox_package[field] = pkg[field];
+      }
 
       grunt.file.write('build/unpacked-dev/package.json', JSON.stringify(firefox_package, null, 4) + '\n');
       grunt.log.ok('firefox manifest.json generated');
@@ -121,10 +160,17 @@ module.exports = function(grunt) {
   grunt.registerTask('test-cont', ['test', 'watch']);
 
   //
-  // DEFAULT
+  // Chrome build
   //
 
-  grunt.registerTask('default', ['clean', 'test', 'mkdir:unpacked', 'copy:main', 'manifest',
-    'mkdir:js', 'browserify', 'copy:prod', 'uglify', 'exec']);
+  grunt.registerTask('chrome', ['clean', 'test', 'mkdir:unpacked', 'copy:main_chrome', 'manifest:chrome',
+    'mkdir:js', 'browserify', 'copy:prod_chrome', 'uglify', 'exec']);
+
+
+  //
+  // Firefox build
+  //
+  grunt.registerTask('firefox', ['clean', 'test', 'mkdir:unpacked', 'browserify', 'copy:main_firefox', 'manifest:firefox',
+     'copy:prod_firefox', 'jpm:xpi']);
 
 };

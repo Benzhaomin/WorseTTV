@@ -1,6 +1,5 @@
 {
-  "license": "MPL 2.0",
-  "main": "index.js",
+  "main": "data/js/firefox-background.js",
   "engines": {
     "firefox": ">=38.0a1",
     "fennec": ">=38.0a1"

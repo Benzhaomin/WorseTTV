@@ -1,5 +1,5 @@
 
-module.exports = (function () {
+var chat = (function () {
 
   // extract the content of a chat line, emotes are replaced by their title
   var _get_plain_text_message = function(node) {
@@ -116,3 +116,10 @@ module.exports = (function () {
   };
 
 })();
+
+if (typeof module !== "undefined") {
+  module.exports = chat;
+}
+else {
+  window.chat = chat;
+}

@@ -1,5 +1,5 @@
 
-var chat = require('./modules/chat');
+var chat = window.chat;
 
 var on_message = function(node_id, text) {
   //console.log("emit(worsettv.diagnose):", text);
