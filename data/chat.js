@@ -6,6 +6,10 @@ worsettv.chat = (function () {
   // extract the content of a chat line, emotes are replaced by their title
   var _get_plain_text_message = function(node) {
     var message = node.querySelector('span.message');
+
+    // abort on bogus nodes
+    if (!message) return "";
+
     var text = message.innerHTML;
 
     // replace each img tag by its alt text
@@ -32,6 +36,9 @@ worsettv.chat = (function () {
 
     // extract a plain text message from the node
     text = _get_plain_text_message(node);
+
+    // early exit of bogus nodes
+    if (text == "") return;
 
     //console.log("calling the doctor:", text);
 
@@ -93,7 +100,7 @@ worsettv.chat = (function () {
   var sane_message = function(node_id, text) {
     var node = document.getElementById(node_id);
 
-    // abort on bogus nodess
+    // abort on bogus nodes
     if (!node) return;
 
     node.classList.add("sane");
