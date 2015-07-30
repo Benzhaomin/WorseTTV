@@ -32,5 +32,21 @@ exports["test MaximumEmoteRatio"] = function(assert) {
   assert.ok(!maxEmotesRatio.exhibited_by("Kappa with text"), "two words one emote");
 };
 
+exports["test MaximumEchoRatio"] = function(assert) {
+  
+  var maxEchoRatio = symptoms.MaximumEchoRatio(0.8);
+  assert.ok(maxEchoRatio.exhibited_by("lol lol"), "2 copies");
+  assert.ok(maxEchoRatio.exhibited_by("lol lol lol lol"), "4 copies");
+  assert.ok(maxEchoRatio.exhibited_by("foo foo foo foo foo foo foo foo foo foo bar"), "tons of copies + 1 other");
+  assert.ok(maxEchoRatio.exhibited_by("foo foo bar bar"), "2*2 copies");
+  assert.ok(!maxEchoRatio.exhibited_by("he did he said he do"), "3 copies and some spare against 0.8");
+  
+  var maxEchoRatio = symptoms.MaximumEchoRatio(0.1);
+  assert.ok(maxEchoRatio.exhibited_by("lol lol"), "2 copies");
+  assert.ok(maxEchoRatio.exhibited_by("lol lol lol lol"), "4 copies");
+  assert.ok(maxEchoRatio.exhibited_by("foo foo foo foo foo foo foo foo foo foo bar"), "tons of copies + 1 other");
+  assert.ok(maxEchoRatio.exhibited_by("foo foo bar bar"), "2*2 copies");
+  assert.ok(maxEchoRatio.exhibited_by("he did he said he do"), "3 copies and some spare against 0.1");
+};
 
 require("sdk/test").run(exports);
