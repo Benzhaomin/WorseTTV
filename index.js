@@ -5,15 +5,20 @@ var diagnosis = require("./lib/diagnosis");
 
 var pageMod = mod.PageMod({
   include: "http://www.twitch.tv/*",
-  contentScriptFile: "./content-script.js",
+  contentScriptFile: [
+    "./content-script.js",
+    "./firefox-content-script.js",
+  ],
   contentStyleFile: "./content-style.css",
+  attachTo: 'top',
   onAttach: startListening,
 });
 
 function startListening(worker) {
+  
   worker.port.on('worsettv.diagnose', function(node, text) {
     
-    //console.log('diagnosis request for text', text, 'on node', node);
+    console.log('diagnosis request for text', text, 'on node', node);
 
     if (diagnosis.diagnose(text).length > 0) {
       worker.port.emit('worsettv.ill', node, text);
@@ -23,3 +28,5 @@ function startListening(worker) {
     }
   });
 }
+
+//tabs.open("http://www.twitch.tv/gamesdonequick");

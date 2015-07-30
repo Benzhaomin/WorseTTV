@@ -1,7 +1,6 @@
 
 /* hide chat lines by default */
 .ember-chat .chat-messages .chat-line {
-  display: none;
   line-height: 18px;
   padding: 3px 20px;
 }
