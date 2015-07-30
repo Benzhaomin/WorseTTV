@@ -125,7 +125,7 @@ module.exports = function(grunt) {
   grunt.registerTask(
     'manifest:chrome', 'Extend Chrome\'s manifest.json with extra fields from the root package.json',
     function() {
-      var fields = ['author', 'name', 'license', 'version', 'description'];
+      var fields = ['author', 'name', 'version', 'description'];
       for (var i = 0; i < fields.length; i++) {
         var field = fields[i];
         chrome_manifest[field] = pkg[field];
