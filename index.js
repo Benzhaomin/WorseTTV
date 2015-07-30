@@ -20,11 +20,11 @@ function startListening(worker) {
     
     //console.log('diagnosis request for text', text, 'on node', node);
 
-    if (diagnosis.diagnose(text).length > 0) {
-      worker.port.emit('worsettv.ill', node, text);
+    if (diagnosis.is_sane(text)) {
+      worker.port.emit('worsettv.sane', node, text);
     }
     else {
-      worker.port.emit('worsettv.sane', node, text);
+      worker.port.emit('worsettv.ill', node, text);
     }
   });
 }
