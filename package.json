@@ -3,7 +3,7 @@
   "name": "worsettv",
   "author": "ben",
   "id": "ben@wainei.net",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "Remove the fun from TwitchTV chat rooms",
   "main": "index.js",
   "engines": {
