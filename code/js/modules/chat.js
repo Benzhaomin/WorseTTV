@@ -1,7 +1,5 @@
 
-var worsettv = worsettv || {};
-
-worsettv.chat = (function () {
+module.exports = (function () {
 
   // extract the content of a chat line, emotes are replaced by their title
   var _get_plain_text_message = function(node) {
@@ -64,7 +62,7 @@ worsettv.chat = (function () {
 
     // abort if there's no chat to observe
     if (document.querySelector('.chat-lines') == null) {
-      console.log("[chat] nothing to be observed on", document.title, document.URL);
+      console.log("[chat] nothing to be observed on " + document.title + " " + document.URL);
       return;
     }
 
@@ -73,7 +71,7 @@ worsettv.chat = (function () {
 
     // start observing the DOM
     _observer.observe(document.querySelector('.chat-lines'), { childList: true });
-    console.log("[chat] starting to observe", document.title, document.URL);
+    console.log("[chat] starting to observe " + document.title + " " + document.URL);
 
     // apply our custom css while the observer runs
     _apply_worse_css(true);
@@ -93,7 +91,6 @@ worsettv.chat = (function () {
     if (!node) { return; }
 
     node.classList.add("ill");
-    //console.log("cancer cured:", text);
   };
 
   // changes a DOM message to the sane status

@@ -12,7 +12,6 @@
         "css/content.css"
       ],
       "js": [
-        "js/chat.js",
         "js/chrome-chat.js"
       ]
   }],

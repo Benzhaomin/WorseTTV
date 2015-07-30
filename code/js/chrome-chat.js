@@ -1,23 +1,27 @@
 
+var chat = require('./modules/chat');
+
 var on_message = function(node_id, text) {
-  console.log("emit(worsettv.diagnose):", text);
+  //console.log("[chrome-chat] emit(worsettv.diagnose):" + text);
   chrome.runtime.sendMessage({"message": "worsettv.chat.message.diagnose", "node": node_id, "text": text});
 };
 
 chrome.runtime.onMessage.addListener(
-  function (request, sender, sendResponse) {
+  function(request, sender, sendResponse) {
+
+    //console.log('[chrome-chat] ' + request.message);
+
     if (request.message === "worsettv.chat.message.ill") {
-      console.log("got cancer there", request.text);
-      worsettv.chat.message.ill(request.node, request.text);
+      chat.message.ill(request.node, request.text);
     }
     else if (request.message === "worsettv.chat.message.sane") {
-      worsettv.chat.message.sane(request.node, request.text);
+      chat.message.sane(request.node, request.text);
     }
     else if (request.message === "worsettv.chat.observer.start") {
-      worsettv.chat.observer.start(on_message);
+      chat.observer.start(on_message);
     }
     else if (request.message === "worsettv.chat.observer.stop") {
-      worsettv.chat.observer.stop();
+      chat.observer.stop();
     }
   }
 );

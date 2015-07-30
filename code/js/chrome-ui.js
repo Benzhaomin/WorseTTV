@@ -9,11 +9,7 @@ var started = false;
 
 chrome.browserAction.onClicked.addListener(function(tab) {
 
-  console.log("TEST1");
-
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-
-    console.log("TEST2");
 
     var activeTab = tabs[0];
 

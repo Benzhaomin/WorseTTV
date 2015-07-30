@@ -19,7 +19,6 @@
     "afterEach": true,
     "it": true,
     "self": true,
-    "chrome": true,
-    "worsettv": true
+    "chrome": true
   }
 }

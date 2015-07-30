@@ -15,7 +15,6 @@ var pageWorkers = [];
 var pageMod = mod.PageMod({
   include: "http://www.twitch.tv/*",
   contentScriptFile: [
-    "./chat.js",
     "./firefox-chat.js",
   ],
   contentStyleFile: "./content-style.css",
