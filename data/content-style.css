@@ -1,16 +1,17 @@
 
 /* hide chat lines by default */
-.ember-chat .chat-messages .chat-line {
+.ember-chat.worsettv .chat-messages .chat-line {
   line-height: 18px;
   padding: 3px 20px;
+  opacity: 0.2;
 }
 
 /* hide cancerous chat lines */
-.ember-chat .chat-messages div.ill .chat-line {
+.ember-chat.worsettv .chat-messages div.ill .chat-line {
 }
 
 /* show sane chat lines */
-.ember-chat .chat-messages div.sane .chat-line {
+.ember-chat.worsettv .chat-messages div.sane .chat-line {
   display: block;
   opacity: 1;
 }
@@ -21,7 +22,7 @@
 }*/
 
 /* only show the first letter of usernames */
-li.ember-view.message-line.chat-line span.from {
+.ember-chat.worsettv li.ember-view.message-line.chat-line span.from {
   width: 18px;
   height: 18px;
   overflow: hidden;
@@ -34,6 +35,6 @@ li.ember-view.message-line.chat-line span.from {
 }
 
 /* hide all emotes */
-li.ember-view.message-line.chat-line span.message img.emoticon {
+.ember-chat.worsettv li.ember-view.message-line.chat-line span.message img.emoticon {
   display: none;
 }

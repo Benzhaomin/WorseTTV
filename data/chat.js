@@ -43,27 +43,17 @@ worsettv.chat = (function () {
   // function to be called for node processing
   var _callback = function(node_id, text) { return true; };
   
-  // change the opacity of chat messages
-  var _set_message_opacity = function(opacity) {
-    _inject_css('.ember-chat .chat-messages .chat-line { opacity: '+opacity+'; }');
-  };
-  
-  // inject css rules in the document
-  var _inject_css = function(css) {
-    var style = document.createElement('style');
-    style.type = 'text/css';
-    if (style.styleSheet) {
-      style.styleSheet.cssText = css;
-    } else {
-      style.appendChild(document.createTextNode(css));
-    }
+  // apply our local css styling
+  var _apply_worse_css = function(toggle) {
+    var chatbox = document.querySelector('.ember-chat');
     
-    var head = document.head || document.getElementsByTagName('head')[0];
-    head.appendChild(style);
+    if (!chatbox) return;
+    
+    chatbox.classList.toggle("worsettv", toggle);
   };
   
   // observe addition to the chat's DOM, run a callback for each new message
-  var observe = function(callback) {
+  var start_observing = function(callback) {
       
     // abort if there's no chat to observe
     if (document.querySelector('.chat-lines') == null) {
@@ -78,9 +68,15 @@ worsettv.chat = (function () {
     _observer.observe(document.querySelector('.chat-lines'), { childList: true });
     console.log("[chat] starting to observe", document.title, document.URL);
     
-    // hide messages starting now, we will show the sane ones after diagnosis
-    _set_message_opacity(0.2);
+    // apply our custom css while the observer runs
+    _apply_worse_css(true);
   };
+  
+  // stop observing and remove our styling
+  var stop_observing = function(callback) {
+    _observer.disconnect();
+    _apply_worse_css(false);
+  }
   
   // changes a DOM message to the ill status
   var ill_message = function(node_id, text) {
@@ -105,7 +101,10 @@ worsettv.chat = (function () {
   
   // public API
   return {
-    observe: observe,
+    observer: {
+      start: start_observing,
+      stop: stop_observing,
+    },
     ill_message: ill_message,
     sane_message: sane_message,
   };
