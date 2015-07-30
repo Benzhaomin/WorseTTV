@@ -13,4 +13,10 @@ self.port.on("worsettv.sane", function(node_id, text) {
   worsettv.chat.message.sane(node_id, text);
 });
 
-worsettv.chat.observer.start(on_message);
+self.port.on("worsettv.chat.observer.start", function() {
+  worsettv.chat.observer.start(on_message);
+});
+
+self.port.on("worsettv.chat.observer.stop", function() {
+  worsettv.chat.observer.stop(on_message);
+});
