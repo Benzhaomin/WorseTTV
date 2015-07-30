@@ -95,12 +95,15 @@ module.exports = function(grunt) {
   grunt.registerTask(
     'manifest', 'Extend Chrome\'s manifest.json and Firefox\'s package.json with extra fields from the root package.json',
     function() {
-      var fields = ['title', 'id', 'author', 'name', 'version', 'description'];
+      var fields = ['author', 'name', 'version', 'description'];
       for (var i = 0; i < fields.length; i++) {
         var field = fields[i];
         chrome_manifest[field] = pkg[field];
         firefox_package[field] = pkg[field];
       }
+
+      chrome_manifest.name = pkg.title;
+      firefox_package.title = pkg.title;
 
       grunt.file.write('build/unpacked-dev/manifest.json', JSON.stringify(chrome_manifest, null, 4) + '\n');
       grunt.log.ok('chrome manifest.json generated');
