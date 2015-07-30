@@ -7,12 +7,12 @@
 
 /* hide cancerous chat lines */
 .ember-chat .chat-messages div.ill .chat-line {
-  display: none;
 }
 
 /* show sane chat lines */
 .ember-chat .chat-messages div.sane .chat-line {
   display: block;
+  opacity: 1;
 }
 
 /* add some padding at the very bottom to fix the auto-scrolling */

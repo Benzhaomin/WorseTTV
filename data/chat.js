@@ -41,7 +41,7 @@ worsettv.chat = (function () {
       observer.observe(document.querySelector('.chat-lines'), { childList: true });
       
       // hide messages starting now, we will show the sane ones
-      var css = '.ember-chat .chat-messages .chat-line { display: none; }';
+      var css = '.ember-chat .chat-messages .chat-line { opacity: 0.2; }';
       
       var style = document.createElement('style');
       style.type = 'text/css';
