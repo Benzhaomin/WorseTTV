@@ -19,7 +19,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 
     started = !started;
 
-    if (started == true) {
+    if (started === true) {
       console.log("started curing");
       chrome.tabs.sendMessage(activeTab.id, {"message": "worsettv.chat.observer.start"});
 
@@ -37,7 +37,3 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     }
   });
 });
-
-var require = function(stuff) {
-  console.log("tried to required", stuff);
-}

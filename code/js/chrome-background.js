@@ -1,5 +1,5 @@
 
-var diagnosis = require('../lib/diagnosis');
+var diagnosis = require('./modules/diagnosis');
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {

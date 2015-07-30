@@ -8,14 +8,18 @@
   "noarg": true,
   "nonew": true,
   "undef": true,
-  "unused": true,
+  "unused": "vars",
   "trailing": true,
   "boss": true,
   "eqnull": true,
+  "browser": true,
   "globals": {
     "beforeEach": true,
     "describe": true,
     "afterEach": true,
-    "it": true
+    "it": true,
+    "self": true,
+    "chrome": true,
+    "worsettv": true
   }
 }

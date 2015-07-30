@@ -1,5 +1,7 @@
 
-var symptoms = module.exports = (function (emotes) {
+var emotes = require('./emotes');
+
+module.exports = (function() {
 
   // message must have a minimum of {count} words
   var MinimumWordCount = function(count) {
@@ -75,4 +77,4 @@ var symptoms = module.exports = (function (emotes) {
     MaximumEchoRatio: MaximumEchoRatio,
   };
 
-})(require('./emotes'));
+})();

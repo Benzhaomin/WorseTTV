@@ -1,7 +1,7 @@
 
 var symptoms = require('./symptoms');
 
-var diagnosis = module.exports = (function () {
+module.exports = (function() {
 
   // list of the symptoms used for the diagnosis
   var _symptoms = [
@@ -14,7 +14,7 @@ var diagnosis = module.exports = (function () {
 
   // returns a list of cancer symptoms found
   var full_diagnosis = function(text) {
-    var found = []
+    var found = [];
 
     _symptoms.forEach(function(symptom) {
       if (symptom.exhibited_by(text)) {

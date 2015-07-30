@@ -8,7 +8,7 @@ worsettv.chat = (function () {
     var message = node.querySelector('span.message');
 
     // abort on bogus nodes
-    if (!message) return "";
+    if (!message) { return ""; }
 
     var text = message.innerHTML;
 
@@ -35,10 +35,10 @@ worsettv.chat = (function () {
   var _on_new_node = function(node) {
 
     // extract a plain text message from the node
-    text = _get_plain_text_message(node);
+    var text = _get_plain_text_message(node);
 
     // early exit of bogus nodes
-    if (text == "") return;
+    if (text === "") { return; }
 
     //console.log("calling the doctor:", text);
 
@@ -48,13 +48,13 @@ worsettv.chat = (function () {
   };
 
   // function to be called for node processing
-  var _callback = function(node_id, text) { return true; };
+  var _callback = null;
 
   // apply our local css styling
   var _apply_worse_css = function(toggle) {
     var chatbox = document.querySelector('.ember-chat');
 
-    if (!chatbox) return;
+    if (!chatbox) { return; }
 
     chatbox.classList.toggle("worsettv", toggle);
   };
@@ -80,17 +80,17 @@ worsettv.chat = (function () {
   };
 
   // stop observing and remove our styling
-  var stop_observing = function(callback) {
+  var stop_observing = function() {
     _observer.disconnect();
     _apply_worse_css(false);
-  }
+  };
 
   // changes a DOM message to the ill status
   var ill_message = function(node_id, text) {
     var node = document.getElementById(node_id);
 
     // abort on bogus nodess
-    if (!node) return;
+    if (!node) { return; }
 
     node.classList.add("ill");
     //console.log("cancer cured:", text);
@@ -101,7 +101,7 @@ worsettv.chat = (function () {
     var node = document.getElementById(node_id);
 
     // abort on bogus nodes
-    if (!node) return;
+    if (!node) { return; }
 
     node.classList.add("sane");
   };

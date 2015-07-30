@@ -2,12 +2,12 @@
 var on_message = function(node_id, text) {
   console.log("emit(worsettv.diagnose):", text);
   chrome.runtime.sendMessage({"message": "worsettv.chat.message.diagnose", "node": node_id, "text": text});
-}
+};
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     if (request.message === "worsettv.chat.message.ill") {
-      console.log("got cancer there", text);
+      console.log("got cancer there", request.text);
       worsettv.chat.message.ill(request.node, request.text);
     }
     else if (request.message === "worsettv.chat.message.sane") {
