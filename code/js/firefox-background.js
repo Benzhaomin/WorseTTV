@@ -45,10 +45,10 @@ mod.PageMod({
 
 // custom context menu item on Twitch's chatbox
 cm.Item({
-  // curing is off by default
-  label: "Cure Cancer",
+  // cancer is On by default
+  label: "Toggle Cancer",
   image: self.data.url("images/kappa-pride.png"),
-  accesskey: 'U',
+  accesskey: 'W',
 
   contentScriptFile: self.data.url("js/firefox-ui.js"),
 
@@ -58,17 +58,9 @@ cm.Item({
       if (pageWorkers[index].tab === tabs.activeTab) {
         if (start === true) {
           pageWorkers[index].port.emit('worsettv.chat.observer.start');
-
-          // curing is now On
-          this.label = "Restore Cancer";
-          this.image = self.data.url("images/kappa.png");
         }
         else {
           pageWorkers[index].port.emit('worsettv.chat.observer.stop');
-
-          // curing is now Off
-          this.label = "Cure Cancer";
-          this.image = self.data.url("images/kappa-pride.png");
         }
       }
     }
