@@ -15,6 +15,7 @@ exports["test MaximumCapsRatio"] = function(assert) {
   assert.ok(capsRatio.exhibited_by("ALL CAPS ALL DAY"), "all caps");
   assert.ok(capsRatio.exhibited_by("A L L C A P S A L L D A Y"), "all caps with spaces");
   assert.ok(capsRatio.exhibited_by("CAPS ResidentSleeper"), "all caps + emote");
+  assert.ok(capsRatio.exhibited_by("ForsenW ForsenW ForsenW DAD ForsenW ForsenW"), "all caps + unknow emote");
   assert.ok(!capsRatio.exhibited_by("Proper casing"), "proper casing");
 };
 
