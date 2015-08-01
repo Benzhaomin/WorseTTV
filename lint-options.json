@@ -13,11 +13,8 @@
   "boss": true,
   "eqnull": true,
   "browser": true,
+  "mocha": true,
   "globals": {
-    "beforeEach": true,
-    "describe": true,
-    "afterEach": true,
-    "it": true,
     "self": true,
     "chrome": true
   }

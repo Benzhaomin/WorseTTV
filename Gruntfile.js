@@ -33,6 +33,11 @@ module.exports = function(grunt) {
                    'code/**/*.json', '!code/js/libs/*'] }
     },
 
+    mochaTest: {
+      options: { colors: true, reporter: 'spec' },
+      files: ['code/**/*.spec.js']
+    },
+
     copy: {
 
       // Chrome: copy everything except JS (which are browserified)
@@ -115,6 +120,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-mkdir');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-exec');
@@ -160,7 +166,7 @@ module.exports = function(grunt) {
   // testing-related tasks
   //
 
-  grunt.registerTask('test', ['jshint']);
+  grunt.registerTask('test', ['jshint', 'mochaTest']);
   grunt.registerTask('test-cont', ['test', 'watch']);
 
   //
