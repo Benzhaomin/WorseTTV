@@ -1,7 +1,35 @@
 
 var chat = (function () {
 
-  // extract the content of a chat line, emotes are replaced by their title
+  // match Twitch badges to a credential level
+  var _badge_to_level = {
+    'staff':            'master',
+    'global-moderator': 'master',
+    'admin':            'master',
+    'broadcaster':      'master',
+    'moderator':        'master',
+    'subscriber':       'sub',
+    'pleb':             'pleb'
+  };
+
+  // returns the author's credentials level (master, sub, pleb)
+  var _get_user_level = function(node) {
+    var badge = node.querySelector('div.badge');
+
+    if (!badge) { return _badge_to_level.pleb; }
+
+    // try to match one of the level with a badge class
+    for (var level in _badge_to_level) {
+      if (badge.classList.indexOf(level) > -1) {
+        // return our own kind of level
+        return _badge_to_level[level];
+      }
+    }
+
+    return _badge_to_level.pleb;
+  };
+
+  // returns the content of a chat line, emotes are replaced by their title
   var _get_plain_text_message = function(node) {
     var message = node.querySelector('span.message');
 
@@ -18,6 +46,16 @@ var chat = (function () {
     return text;
   };
 
+  // returns the message's author's username
+  var _get_username = function(node) {
+    var username = node.querySelector('span.from');
+
+    // abort on bogus nodes
+    if (!username) { return ""; }
+
+    return username.textContent;
+  };
+
   // observe the DOM and report addition of nodes
   var _observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
@@ -32,17 +70,19 @@ var chat = (function () {
   // react to the addition of a single new node
   var _on_new_node = function(node) {
 
-    // extract a plain text message from the node
-    var text = _get_plain_text_message(node);
+    // prepare a message object to send around
+    var message = {};
+
+    message.text = _get_plain_text_message(node);
 
     // early exit of bogus nodes
-    if (text === "") { return; }
+    if (message.text === "") { return; }
 
-    //console.log("calling the doctor:", text);
+    message.user_level = _get_user_level(node);
+    message.username = _get_username(node);
 
-    // send the node to the add-on code for diagnosis
-    //console.log(callback);
-    _callback(node.id, text);
+    // send the message back
+    _callback(node.id, message.text);
   };
 
   // function to be called for node processing
