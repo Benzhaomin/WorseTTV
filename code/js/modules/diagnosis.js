@@ -10,6 +10,7 @@ module.exports = (function() {
     symptoms.MaximumEmoteCount(1),
     symptoms.MaximumEmoteRatio(0.49),
     symptoms.MaximumEchoRatio(0.8),
+    symptoms.CopyPasta(),
   ];
 
   // returns a list of cancer symptoms found

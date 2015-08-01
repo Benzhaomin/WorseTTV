@@ -171,4 +171,30 @@ describe('symptoms modules', function() {
 
   });
 
+  // NoCopyPasta.exhibited_by()
+  describe('NoCopyPasta().exhibited_by()', function() {
+
+    beforeEach(function() {
+      symptom = symptoms.CopyPasta();
+    });
+
+    it('should not be exhibited by short messages', function() {
+      assert.equal(false, symptom.exhibited_by("Kappa with text"));
+      assert.equal(false, symptom.exhibited_by("foo foo bar bar foo foo bar bar foo foo bar bar"));
+    });
+
+    it('should not be exhibited by new long messages', function() {
+      assert.equal(false, symptom.exhibited_by("Kappa with text"));
+    });
+
+    it('should be exhibited by repeating long messages', function() {
+      var message = "This method can be used with call() or apply() on objects resembling arrays. The push method relies on a length property to determine where to start inserting the given values.";
+
+      assert.equal(false, symptom.exhibited_by(message));
+      assert.equal(true, symptom.exhibited_by(message));
+      assert.equal(true, symptom.exhibited_by(message));
+    });
+
+  });
+
 });

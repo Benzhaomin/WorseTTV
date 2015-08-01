@@ -68,6 +68,39 @@ module.exports = (function() {
     };
   };
 
+  // detects long messages being copy-pasted
+  var CopyPasta = function() {
+    var _minLength = 60;
+    var _pastas = [];
+
+    return {
+      exhibited_by: function(text) {
+
+        // early-exit most of the time
+        if (text.length < _minLength) {
+          return false;
+        }
+
+        // try to find that text in our pasta buffer
+        var is_copy = _pastas.some(function(pasta) {
+          return pasta === text;
+        });
+
+        // add new text to the buffer
+        if (!is_copy) {
+          _pastas.push(text);
+        }
+
+        // purge our buffer as it fills up
+        if (_pastas.length > 100) {
+          _pastas.shift();
+        }
+
+        return is_copy;
+      },
+    };
+  };
+
   // public API
   return {
     MinimumWordCount: MinimumWordCount,
@@ -75,6 +108,7 @@ module.exports = (function() {
     MaximumEmoteCount: MaximumEmoteCount,
     MaximumEmoteRatio: MaximumEmoteRatio,
     MaximumEchoRatio: MaximumEchoRatio,
+    CopyPasta: CopyPasta,
   };
 
 })();
