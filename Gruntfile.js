@@ -4,14 +4,34 @@ module.exports = function(grunt) {
   var chrome_manifest = grunt.file.readJSON('code/manifest.json');
   var firefox_package = grunt.file.readJSON('code/package.json');
 
-  var fileMaps = { browserify: {}, uglify: {} };
-  var file, files = grunt.file.expand({cwd:'code/js'}, ['*.js']);
+  // build browser-specific lists of in/out paths for js files
+  var fileMaps = {
+    browserify: {
+      chrome: {},
+      firefox: {}
+    },
+    uglify: {
+      chrome: {},
+      firefox: {}
+    }
+  };
+
+  var files = grunt.file.expand({cwd:'code/js'}, ['*.js']);
+  var file;
+
   for (var i = 0; i < files.length; i++) {
     file = files[i];
 
-    if (file.indexOf('firefox') !== -1) { continue; }
-    fileMaps.browserify['build/unpacked-dev/js/' + file] = 'code/js/' + file;
-    fileMaps.uglify['build/unpacked-prod/js/' + file] = 'build/unpacked-dev/js/' + file;
+    // chrome-* files
+    if (file.indexOf('chrome-') > -1) {
+      fileMaps.browserify.chrome['build/unpacked-dev/js/' + file] = 'code/js/' + file;
+      fileMaps.uglify.chrome['build/unpacked-prod/js/' + file] = 'build/unpacked-dev/js/' + file;
+    }
+    // firefox-* files
+    else if (file.indexOf('firefox-') > -1) {
+      fileMaps.browserify.firefox['build/unpacked-dev/data/js/' + file] = 'code/js/' + file;
+      fileMaps.uglify.firefox['build/unpacked-prod/data/js/' + file] = 'build/unpacked-dev/data/js/' + file;
+    }
   }
 
   //
@@ -24,7 +44,8 @@ module.exports = function(grunt) {
 
     mkdir: {
       unpacked: { options: { create: ['build/unpacked-dev', 'build/unpacked-prod'] } },
-      js: { options: { create: ['build/unpacked-dev/js'] } }
+      js: { options: { create: ['build/unpacked-dev/js'] } },
+      data_js: { options: { create: ['build/unpacked-dev/data/js'] } }
     },
 
     jshint: {
@@ -40,50 +61,69 @@ module.exports = function(grunt) {
 
     copy: {
 
-      // Chrome: copy everything except JS (which are browserified)
-      main_chrome: { files: [ {
+      // exclude firefox's package.json
+      chrome_dev: { files: [ {
           expand: true,
           cwd: 'code/',
           src: ['**', '!js/**', '!**/*.md', '!package.json', '!images/logo-source.png',],
           dest: 'build/unpacked-dev/'
       } ] },
-      prod_chrome: { files: [ {
-        expand: true,
-        cwd: 'build/unpacked-dev/',
-        src: ['**', '!js/*.js'],
-        dest: 'build/unpacked-prod/'
-      } ] },
 
-      // Firefox: copy everything except Chrome files, to a data/ sub-dir
-      main_firefox: { files: [ {
+      // exclude chrome's manifest.json and move files to a data/ sub-dir
+      firefox_dev: { files: [ {
           expand: true,
           cwd: 'code/',
-          src: ['**', '!images/icon.png', '!images/logo-source.png', '!manifest.json', '!js/chrome**.js', '!**/*.md'],
+          src: ['**', '!js/**', '!**/*.md', '!manifest.json', '!images/logo-source.png', '!images/icon.png'],
           dest: 'build/unpacked-dev/data/'
-        },
-        // move icon.png to the root (jpm bug)
-        {
+        }, {
+          expand: true,
+          cwd: 'code/',
+          src: ['package.json'],
+          dest: 'build/unpacked-dev/'
+      }, {
           expand: true,
           cwd: 'code/images/',
           src: ['icon.png'],
           dest: 'build/unpacked-dev/'
-        } ]
-      },
-      prod_firefox: { files: [ {
+      } ] },
+
+      // copy everything except js files (later uglified)
+      prod: { files: [ {
         expand: true,
         cwd: 'build/unpacked-dev/',
-        src: ['**'],
+        src: ['**', '!js/*.js',],
         dest: 'build/unpacked-prod/'
-      } ] }
+      } ] },
     },
 
     browserify: {
-      build: {
-        files: fileMaps.browserify,
-        options: { browserifyOptions: {
-          debug: true,  // for source maps
-          standalone: pkg['export-symbol']
-        } }
+
+      chrome: {
+        files: fileMaps.browserify.chrome,
+        options: {
+          browserifyOptions: {
+            debug: true, // for source maps
+            standalone: pkg['export-symbol']
+          },
+        }
+      },
+
+      firefox: {
+        files: fileMaps.browserify.firefox,
+        options: {
+          browserifyOptions: {
+            debug: true, // for source maps
+            standalone: pkg['export-symbol']
+          },
+          // exclude Firefox's SDK, it'll be there at runtime
+          exclude: [
+            'sdk/self',
+            'sdk/tabs',
+            'sdk/page-mod',
+            'sdk/util/array',
+            'sdk/context-menu'
+          ],
+        }
       }
     },
 
@@ -97,7 +137,12 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-      min: { files: fileMaps.uglify }
+      chrome: {
+        files: fileMaps.uglify.chrome
+      },
+      firefox: {
+        files: fileMaps.uglify.firefox
+      }
     },
 
     watch: {
@@ -173,14 +218,14 @@ module.exports = function(grunt) {
   // Chrome build
   //
 
-  grunt.registerTask('chrome', ['clean', 'test', 'mkdir:unpacked', 'copy:main_chrome', 'manifest:chrome',
-    'mkdir:js', 'browserify', 'copy:prod_chrome', 'uglify', 'exec']);
+  grunt.registerTask('chrome', ['clean', 'test', 'mkdir:unpacked', 'copy:chrome_dev', 'manifest:chrome',
+    'mkdir:js', 'browserify:chrome', 'copy:prod', 'uglify:chrome', 'exec']);
 
 
   //
   // Firefox build
   //
-  grunt.registerTask('firefox', ['clean', 'test', 'mkdir:unpacked', 'copy:main_firefox', 'manifest:firefox',
-     'copy:prod_firefox', 'jpm:xpi']);
+  grunt.registerTask('firefox', ['clean', 'test', 'mkdir:unpacked', 'copy:firefox_dev', 'manifest:firefox',
+     'mkdir:data_js', 'browserify:firefox', 'copy:prod', 'uglify:firefox', 'jpm:xpi']);
 
 };
