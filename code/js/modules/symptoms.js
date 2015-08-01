@@ -16,7 +16,7 @@ module.exports = (function() {
   var MaximumCapsRatio = function(ratio) {
     return {
       exhibited_by: function(text) {
-        text = emotes.strip(text);
+        text = emotes.strip(text, true);
         return text.replace(/[a-z]/g, '').length / text.length > ratio;
       },
     };

@@ -6,7 +6,7 @@ module.exports = (function() {
   // list of the symptoms used for the diagnosis
   var _symptoms = [
     symptoms.MinimumWordCount(2),
-    symptoms.MaximumCapsRatio(0.7),
+    symptoms.MaximumCapsRatio(0.5),
     symptoms.MaximumEmoteCount(1),
     symptoms.MaximumEmoteRatio(0.49),
     symptoms.MaximumEchoRatio(0.8),

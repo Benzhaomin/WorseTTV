@@ -26,10 +26,11 @@ describe('symptoms modules', function() {
   describe('MaximumCapsRatio().exhibited_by()', function() {
 
     beforeEach(function() {
-      symptom = symptoms.MaximumCapsRatio(0.4);
+      symptom = symptoms.MaximumCapsRatio(0.5);
     });
 
     it('should be exhibited by a message in all caps', function() {
+      assert.equal(true, symptom.exhibited_by("ALL"));
       assert.equal(true, symptom.exhibited_by("ALL CAPS ALL DAY"));
     });
 
@@ -41,12 +42,17 @@ describe('symptoms modules', function() {
       assert.equal(true, symptom.exhibited_by("CAPS ResidentSleeper"));
     });
 
-    it('should be exhibited by a message in all caps and sub-only emotes', function() {
-      assert.equal(true, symptom.exhibited_by("ForsenW ForsenW ForsenW DAD ForsenW ForsenW"));
+    it('should be exhibited by a message in all caps and unknown/sub-only emotes', function() {
+      //assert.equal(true, symptom.exhibited_by("ForsenW ForsenW ForsenW DAD ForsenW ForsenW"));
+      //assert.equal(true, symptom.exhibited_by("NotLikeThis AWKWARD NotLikeThis"));
+      //assert.equal(true, symptom.exhibited_by("1 HOUR LEFT? DansGamer"));
+      assert.equal(true, symptom.exhibited_by("SÊX HER SHAMPOO NotLikeThis NotLikeThis NotLikeThis NotLikeThis"));
     });
 
     it('should not be exhibited by a message with proper casing', function() {
       assert.equal(false, symptom.exhibited_by("Proper casing"));
+      assert.equal(false, symptom.exhibited_by("Ok"));
+      assert.equal(false, symptom.exhibited_by("Yes"));
     });
 
   });

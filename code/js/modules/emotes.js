@@ -21,10 +21,14 @@ module.exports = (function() {
   };
 
   // checks whether a word looks like an emote
-  // TODO: develop the fuzzy checks further
-  /*var _quacks_like_emote = function(word) {
-    return /[A-Z][a-z]*[A-Z0-9]/.test(word);
-  };*/
+  var quacks_like_emote = function(word) {
+    return /[A-Z][a-z]+[A-Z0-9]/.test(word) || _is_emote(word);
+  };
+
+  // reverse quacks_like_emote to ease text filtering
+  var _quacks_like_emote_not = function(word) {
+    return !quacks_like_emote(word);
+  };
 
   // returns true if the text contains at least one emote
   var any_in = function(text) {
@@ -37,8 +41,10 @@ module.exports = (function() {
   };
 
   // removes all emotes found in the text
-  var strip = function(text) {
-    return text.split(' ').filter(_is_not_emote).join(' ');
+  var strip = function(text, fuzzy) {
+    var filter_func = (typeof fuzzy === 'undefined' || fuzzy === false) ? _is_not_emote : _quacks_like_emote_not;
+
+    return text.split(' ').filter(filter_func).join(' ');
   };
 
   // public API
@@ -46,6 +52,7 @@ module.exports = (function() {
     any_in: any_in,
     count: count,
     strip: strip,
+    quacks: quacks_like_emote,
   };
 
 })();
