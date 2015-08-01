@@ -70,8 +70,23 @@ module.exports = (function() {
 
   // detects long messages being copy-pasted
   var CopyPasta = function() {
-    var _minLength = 60;
+    var _minLength = 100; // ignore text shorter than this limit
+    var _maxSimilarityRatio = 0.9; // pastas are text more than 90% alike
     var _pastas = [];
+
+    // returns whether the text looks like the pasta
+    var _smells_like_pasta = function(text, pasta) {
+      // we could sort and unduplicate words both in the saved pasta and the text itself
+      var words = text.split(' ');
+
+      // find duplicate words
+      var common = words.filter(function(word) {
+        return pasta.indexOf(word) > -1;
+      });
+
+      // if a lot of words are common to the text and the pasta, smells like pasta
+      return common.length / pasta.split(' ').length > _maxSimilarityRatio;
+    };
 
     return {
       exhibited_by: function(text) {
@@ -83,7 +98,7 @@ module.exports = (function() {
 
         // try to find that text in our pasta buffer
         var is_copy = _pastas.some(function(pasta) {
-          return pasta === text;
+          return _smells_like_pasta(text, pasta);
         });
 
         // add new text to the buffer

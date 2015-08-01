@@ -195,6 +195,15 @@ describe('symptoms modules', function() {
       assert.equal(true, symptom.exhibited_by(message));
     });
 
+    it('should be exhibited by slight variations of long messages', function() {
+      assert.equal(false, symptom.exhibited_by("Guys stop spamming the chat. If my dad finds out I am on twitch he will come into my room and beat me with a lead pipe. Please don't copy this comment."));
+      assert.equal(true, symptom.exhibited_by("Guys stop spamming the chat. If my dad finds out I am on twitch he will come into my room and beat me with a lead pipe. Please don't copy this comment.."));
+      assert.equal(true, symptom.exhibited_by("Guys stop spamming the chat. If my dad finds out I am on twitch he will come into my room and beat me with a lead pipe. Please don't copy this comment..."));
+      assert.equal(true, symptom.exhibited_by("Username: Guys stop spamming the chat. If my dad finds out I am on twitch he will come into my room and beat me with a lead pipe. Please don't copy this comment."));
+      assert.equal(true, symptom.exhibited_by("Username: Username: Guys stop spamming the chat. If my dad finds out I am on twitch he will come into my room and beat me with a lead pipe. Please don't copy this comment."));
+      assert.equal(true, symptom.exhibited_by("Guys stop spamming the twitch. If my lead pipe finds out I am on dad he will come into my room and beat me with a chat. Please don't copy this comment."));
+    });
+
   });
 
 });
