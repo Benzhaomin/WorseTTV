@@ -10,7 +10,6 @@
   "devDependencies": {
     "browserify": "~7.0.3",
     "grunt": "~0.4.5",
-    "mocha": "~2.2.5",
     "grunt-browserify": "~3.2.1",
     "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-copy": "~0.7.0",
@@ -20,7 +19,10 @@
     "grunt-exec": "~0.4.6",
     "grunt-jpm-modern": "~0.3.0",
     "grunt-mkdir": "~0.1.2",
-    "grunt-mocha-test": "~0.12.7"
+    "grunt-mocha-test": "~0.12.7",
+    "jsdom": "^3.1.2",
+    "mocha": "~2.2.5",
+    "mocha-jsdom": "^1.0.0"
   },
   "engines": {
     "node": ">= 0.10.0"

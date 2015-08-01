@@ -20,7 +20,7 @@ module.exports = (function() {
 
     // try to match one of the level with a badge class
     for (var level in _badge_to_level) {
-      if (badge.classList.contains(level)) {
+      if (badge.className.indexOf(level) > -1) {
         // return our own kind of level
         return _badge_to_level[level];
       }

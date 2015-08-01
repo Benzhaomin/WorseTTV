@@ -66,4 +66,4 @@ cm.Item({
   },
 });
 
-//tabs.open("http://www.twitch.tv/gamesdonequick");
+tabs.open("http://www.twitch.tv/gamesdonequick");
