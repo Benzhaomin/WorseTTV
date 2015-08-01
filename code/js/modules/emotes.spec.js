@@ -96,14 +96,16 @@ describe('emotes modules', function() {
       assert.equal(true, emotes.quacks("ResidentSleeper"));
     });
 
-    it('should return true when the word has several alternating caps looking like an emote', function() {
+    it('should return true when the word looks like ThisThat', function() {
       assert.equal(true, emotes.quacks("DankMemes"));
       assert.equal(true, emotes.quacks("NotLikeThis"));
       assert.equal(true, emotes.quacks("ForsenW"));
     });
 
-    it('should return false when the word is an emote but does not look like one', function() {
-      assert.equal(false, emotes.quacks("trumpW"));
+    it('should return true when the word looks like thisThat', function() {
+      assert.equal(true, emotes.quacks("trumpW"));
+      assert.equal(true, emotes.quacks("mollyThump"));
+      assert.equal(true, emotes.quacks("ForsenW"));
     });
 
     it('should return false when the word is not an emote at all', function() {

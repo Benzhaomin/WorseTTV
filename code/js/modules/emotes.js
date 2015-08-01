@@ -22,7 +22,7 @@ module.exports = (function() {
 
   // checks whether a word looks like an emote
   var quacks_like_emote = function(word) {
-    return /[A-Z][a-z]+[A-Z0-9]/.test(word) || _is_emote(word);
+    return /[A-Z]?[a-z]+[A-Z0-9]/.test(word) || _is_emote(word);
   };
 
   // reverse quacks_like_emote to ease text filtering
