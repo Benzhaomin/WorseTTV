@@ -24,30 +24,37 @@
     }
   });
 
-  var contextMenu;
+  // context menu unique id
+  var _context_menu_id = "worsettv.toggle_cancer";
 
-  var onContextMenuClicked = function(info, tab) {
+  // register our context menu when the extension is installed or updated
+  chrome.runtime.onInstalled.addListener(function() {
+    chrome.contextMenus.create({
+      "id": _context_menu_id,
+      "title": "Toggle Cancer",
+      "contexts":["page"],
+      "documentUrlPatterns": ["http://www.twitch.tv/*"],
+    });
+  });
+
+  // react to clicks in the context menu
+  chrome.contextMenus.onClicked.addListener(function(info, tab) {
+
+    // ignore other menus
+    if (info.menuItemId !== _context_menu_id) {
+      return;
+    }
 
     if (!is_started(tab.id)) {
       //console.log("[chrome-ui] start curing plz");
-
       chrome.tabs.sendMessage(tab.id, {"message": "worsettv.chat.observer.start"});
     }
     else {
       //console.log("[chrome-ui] stop curing plz");
-
       chrome.tabs.sendMessage(tab.id, {"message": "worsettv.chat.observer.stop"});
     }
 
     toggle_state(tab.id);
-
-  };
-
-  contextMenu = chrome.contextMenus.create({
-    "title": "Toggle Cancer",
-    "contexts":["page"],
-    "documentUrlPatterns": ["http://www.twitch.tv/*"],
-    "onclick": onContextMenuClicked
   });
 
 })(chrome);
