@@ -1,81 +1,61 @@
 
+var parser = require('./parser');
+
 module.exports = (function() {
 
-  // match Twitch badges to a credential level
-  var _badge_to_level = {
-    'staff':            'master',
-    'global-moderator': 'master',
-    'admin':            'master',
-    'broadcaster':      'master',
-    'moderator':        'master',
-    'subscriber':       'sub',
-    'pleb':             'pleb'
-  };
+  var Message = function() {};
 
-  // returns the author's credentials level (master, sub, pleb)
-  var _get_user_level = function(node) {
-    var badge = node.querySelector('div.badge');
+  // holds a Twitch chat message, built from a DOM node
+  Message.prototype.from_node = function(node) {
 
-    if (!badge) { return _badge_to_level.pleb; }
+    // keep a reference to the DOM Element
+    this._node = node;
 
-    // try to match one of the level with a badge class
-    for (var level in _badge_to_level) {
-      if (badge.className.indexOf(level) > -1) {
-        // return our own kind of level
-        return _badge_to_level[level];
-      }
+    // parse the node's data for outsiders
+    this.id = parser.get_id(this._node);
+    this.author = parser.get_username(this._node);
+    this.badge = parser.get_badge(this._node);
+    this.text = parser.get_message(this._node);
+
+    if (this.text === "") {
+      throw new Error("Found a node with no content: " + this.id);
     }
 
-    return _badge_to_level.pleb;
+    return this;
   };
 
-  // returns the content of a chat line, emotes are replaced by their title
-  var _get_plain_text_message = function(node) {
-    var message = node.querySelector('span.message');
+  // builds a message from its DOM id
+  Message.prototype.from_id = function(id) {
+    var node = document.getElementById(id);
 
-    // abort on bogus nodes
-    if (!message) { return ""; }
-
-    var text = message.innerHTML;
-
-    // replace each img tag by its alt text
-    Array.prototype.slice.call(message.querySelectorAll('img')).forEach(function(image) {
-      text = text.replace(image.outerHTML, image.alt);
-    });
-
-    return text;
+    return this.from_node(node);
   };
 
-  // returns the message's author's username
-  var _get_username = function(node) {
-    var username = node.querySelector('span.from');
+  // changes a message's status (ill or sane)
+  Message.prototype.status = function(s) {
+    if (s === "ill" || s === "sane") {
+      // remove the previous status class if any
+      this._node.className = this._node.className.replace("ill", "").replace("sane", "");
 
-    // abort on bogus nodes
-    if (!username) { return ""; }
-
-    return username.textContent;
+      // add the new class
+      this._node.className += " " + s;
+    }
   };
 
-  // react to the addition of a single new node
+  // build from DOM helper
   var from_node = function(node) {
+    return new Message().from_node(node);
+  };
 
-    var message = {};
-
-    message.text = _get_plain_text_message(node);
-
-    // early exit of bogus nodes
-    if (message.text === "") { return; }
-
-    message.id = node.id;
-    message.user_level = _get_user_level(node);
-    message.username = _get_username(node);
-
-    return message;
+  // build from id helper
+  var from_id = function(id) {
+    return new Message().from_id(id);
   };
 
   // public API
   return {
-    from_node: from_node
+    from_node: from_node,
+    from_id: from_id
   };
 
 })();

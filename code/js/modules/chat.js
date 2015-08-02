@@ -16,13 +16,16 @@ module.exports = (function() {
 
   // react to the addition of a single new node
   var _on_new_node = function(node) {
+    try {
+      // get a message object to send around
+      var payload = message.from_node(node);
 
-    // get a message object to send around
-    var payload = message.from_node(node);
-
-    // send the message back
-    if (payload) {
-      _callback(payload.id, payload.text);
+      // send the message back
+      _callback(payload);
+    }
+    catch (err) {
+      // we don't really care about those
+      //console.log(err);
     }
   };
 
@@ -64,35 +67,11 @@ module.exports = (function() {
     _apply_worse_css(false);
   };
 
-  // changes a DOM message to the ill status
-  var ill_message = function(node_id, text) {
-    var node = document.getElementById(node_id);
-
-    // abort on bogus nodess
-    if (!node) { return; }
-
-    node.classList.add("ill");
-  };
-
-  // changes a DOM message to the sane status
-  var sane_message = function(node_id, text) {
-    var node = document.getElementById(node_id);
-
-    // abort on bogus nodes
-    if (!node) { return; }
-
-    node.classList.add("sane");
-  };
-
   // public API
   return {
     observer: {
       start: start_observing,
       stop: stop_observing,
-    },
-    message: {
-      ill: ill_message,
-      sane: sane_message,
     },
   };
 

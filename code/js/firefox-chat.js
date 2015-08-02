@@ -1,22 +1,23 @@
 
-var chat = require('./modules/chat.js');
+var chat = require('./modules/chat');
+var message = require('./modules/message');
 
-var on_message = function(node_id, text) {
-  //console.log("emit(worsettv.diagnose):", text);
-  self.port.emit("worsettv.chat.message.diagnose", node_id, text);
+var on_chat_message = function(msg) {
+  self.port.emit("worsettv.message.diagnose", msg);
 };
 
-self.port.on("worsettv.chat.message.ill", function(node_id, text) {
-  //console.log("got cancer there", text);
-  chat.message.ill(node_id, text);
+self.port.on("worsettv.message.ill", function(msg) {
+  // rebuild a message object after it has been deserialized by the port
+  message.from_id(msg.id).status('ill');
 });
 
-self.port.on("worsettv.chat.message.sane", function(node_id, text) {
-  chat.message.sane(node_id, text);
+self.port.on("worsettv.message.sane", function(msg) {
+  // rebuild a message object after it has been deserialized by the port
+  message.from_id(msg.id).status('sane');
 });
 
 self.port.on("worsettv.chat.observer.start", function() {
-  chat.observer.start(on_message);
+  chat.observer.start(on_chat_message);
 });
 
 self.port.on("worsettv.chat.observer.stop", function() {

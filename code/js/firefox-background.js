@@ -28,15 +28,15 @@ mod.PageMod({
     worker.on('detach', function() { array.remove(pageWorkers, this); });
 
     // listen to diagnosis requests
-    worker.port.on('worsettv.chat.message.diagnose', function(node, text) {
+    worker.port.on('worsettv.message.diagnose', function(msg) {
 
-      //console.log('[firefox-background] diagnosis request for text', text, 'on node', node);
+      //console.log('[firefox-background] diagnosis request for', msg);
 
-      if (diagnosis.is_sane(text)) {
-        worker.port.emit('worsettv.chat.message.sane', node, text);
+      if (diagnosis.is_sane(msg.text)) {
+        worker.port.emit('worsettv.message.sane', msg);
       }
       else {
-        worker.port.emit('worsettv.chat.message.ill', node, text);
+        worker.port.emit('worsettv.message.ill', msg);
       }
     });
   }
