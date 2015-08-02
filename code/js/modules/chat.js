@@ -55,7 +55,7 @@ module.exports = (function() {
 
     // start observing the DOM
     _observer.observe(document.querySelector('.chat-lines'), { childList: true });
-    console.log("[chat] starting to observe " + document.title + " " + document.URL);
+    //console.log("[chat] starting to observe " + document.title + " " + document.URL);
 
     // apply our custom css while the observer runs
     _apply_worse_css(true);
