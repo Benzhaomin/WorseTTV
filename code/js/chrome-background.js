@@ -9,7 +9,7 @@ chrome.runtime.onMessage.addListener(
     if (request.message === "worsettv.message.diagnose") {
       //console.log('[chrome-background] diagnosis request for text ' + request.msg.text + ' on node ' + request.msg.id);
 
-      var sane = diagnosis.is_sane(request.msg.text);
+      var sane = !diagnosis.cancer(request.msg);
 
       chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 

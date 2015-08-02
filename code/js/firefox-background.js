@@ -32,7 +32,7 @@ mod.PageMod({
 
       //console.log('[firefox-background] diagnosis request for', msg);
 
-      if (diagnosis.is_sane(msg.text)) {
+      if (!diagnosis.cancer(msg)) {
         worker.port.emit('worsettv.message.sane', msg);
       }
       else {

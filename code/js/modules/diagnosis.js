@@ -33,10 +33,25 @@ module.exports = (function() {
     });
   };
 
+  // checks whether the author is immune to cancer
+  var is_immune = function(badge) {
+    return badge !== 'pleb'/* && badge !== 'subscriber'*/; // TODO: add options UI
+  };
+
+  // diagnose cancer from a Message object
+  var has_cancer = function(msg) {
+    if (is_immune(msg.badge)) {
+      return false;
+    }
+    return !is_sane(msg.text);
+  };
+
   // public API
   return {
-    full_diagnosis: full_diagnosis,
+    full: full_diagnosis,
     is_sane: is_sane,
+    is_immune: is_immune,
+    cancer: has_cancer
   };
 
 })();
