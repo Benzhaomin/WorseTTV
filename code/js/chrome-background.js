@@ -7,31 +7,25 @@ chrome.runtime.onMessage.addListener(
     //console.log('[chrome-background] ' + request.message);
 
     if (request.message === "worsettv.message.diagnose") {
+
       //console.log('[chrome-background] diagnosis request for text ' + request.msg.text + ' on node ' + request.msg.id);
 
-      var sane = !diagnosis.cancer(request.msg);
+      if (!diagnosis.cancer(request.msg)) {
+        //console.log('[chrome-background] sane message here');
 
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(sender.tab.id, {
+          "message": "worsettv.message.sane",
+          "msg": request.msg
+        });
+      }
+      else {
+        //console.log('[chrome-background] ill message here');
 
-        var activeTab = tabs[0];
-
-        if (sane) {
-          //console.log('[chrome-background] sane message here');
-
-          chrome.tabs.sendMessage(activeTab.id, {
-            "message": "worsettv.message.sane",
-            "msg": request.msg
-          });
-        }
-        else {
-          //console.log('[chrome-background] ill message here');
-
-          chrome.tabs.sendMessage(activeTab.id, {
-            "message": "worsettv.message.ill",
-            "msg": request.msg
-          });
-        }
-      });
+        chrome.tabs.sendMessage(sender.tab.id, {
+          "message": "worsettv.message.ill",
+          "msg": request.msg
+        });
+      }
     }
   }
 );
