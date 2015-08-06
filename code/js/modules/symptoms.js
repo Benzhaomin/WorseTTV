@@ -16,7 +16,6 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/gpl-3.0.en.html>.
 */
 
-
 var emotes = require('./emotes');
 
 module.exports = (function() {
