@@ -2,7 +2,7 @@
   "title": "Twitch No Cancerino",
   "name": "worsettv",
   "version": "0.2.6",
-  "description": "Adds the ability to toggle the fun/cancer on and off in Twitch chat rooms.",
+  "description": "Adds a right-click menu option to toggle cancer on/off in Twitch's chat.",
   "author": "ben",
   "id": "ben@wainei.net",
   "license": "MPL 2.0",
