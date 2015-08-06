@@ -1,8 +1,8 @@
 {
-  "title": "WorseTTV",
+  "title": "Twitch No Cancerino",
   "name": "worsettv",
-  "version": "0.2.5",
-  "description": "Adds the ability to toggle the fun/cancer on and off in TwitchTV chat rooms.",
+  "version": "0.2.6",
+  "description": "Adds the ability to toggle the fun/cancer on and off in Twitch chat rooms.",
   "author": "ben",
   "id": "ben@wainei.net",
   "license": "MPL 2.0",
