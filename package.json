@@ -1,11 +1,11 @@
 {
   "title": "Twitch No Cancerino",
   "name": "worsettv",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Adds a right-click menu option to toggle cancer on/off in Twitch's chat.",
   "author": "ben",
   "id": "ben@wainei.net",
-  "license": "MPL 2.0",
+  "license": "GPL-3.0",
   "dependencies": {},
   "devDependencies": {
     "browserify": "~7.0.3",
