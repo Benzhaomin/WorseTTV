@@ -5,6 +5,7 @@
   "description": "Adds a right-click menu option to toggle cancer on/off in Twitch's chat.",
   "author": "ben",
   "id": "ben@wainei.net",
+  "repository": "https://github.com/Benzhaomin/WorseTTV",
   "license": "GPL-3.0",
   "dependencies": {},
   "devDependencies": {
