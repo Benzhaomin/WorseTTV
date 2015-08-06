@@ -18,7 +18,7 @@ Firefox and Chrome extension that adds a right-click menu option to toggle cance
 
 ## Cancer detection
 
-See [diagnosis.js](code/modules/diagnosis.js) and [symptom.js](code/modules/symptom.js), basically cancer is message with any of:
+See [diagnosis.js](code/js/modules/diagnosis.js) and [symptom.js](code/js/modules/symptom.js), basically cancer is message with any of:
 
 - 1 word only
 - more than 50% caps
