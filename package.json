@@ -1,7 +1,7 @@
 {
   "title": "Twitch No Cancerino",
   "name": "worsettv",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Adds a right-click menu option to toggle cancer on/off in Twitch's chat.",
   "author": "ben",
   "id": "ben@wainei.net",
@@ -15,7 +15,6 @@
     "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-copy": "~0.7.0",
     "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-uglify": "~0.6.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-exec": "~0.4.6",
     "grunt-jpm-modern": "~0.3.0",

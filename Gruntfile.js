@@ -9,10 +9,6 @@ module.exports = function(grunt) {
     browserify: {
       chrome: {},
       firefox: {}
-    },
-    uglify: {
-      chrome: {},
-      firefox: {}
     }
   };
 
@@ -25,12 +21,10 @@ module.exports = function(grunt) {
     // chrome-* files
     if (file.indexOf('chrome-') > -1) {
       fileMaps.browserify.chrome['build/unpacked-dev/js/' + file] = 'code/js/' + file;
-      fileMaps.uglify.chrome['build/unpacked-prod/js/' + file] = 'build/unpacked-dev/js/' + file;
     }
     // firefox-* files
     else if (file.indexOf('firefox-') > -1) {
       fileMaps.browserify.firefox['build/unpacked-dev/data/js/' + file] = 'code/js/' + file;
-      fileMaps.uglify.firefox['build/unpacked-prod/data/js/' + file] = 'build/unpacked-dev/data/js/' + file;
     }
   }
 
@@ -91,7 +85,7 @@ module.exports = function(grunt) {
       prod: { files: [ {
         expand: true,
         cwd: 'build/unpacked-dev/',
-        src: ['**', '!js/*.js',],
+        src: ['**',],
         dest: 'build/unpacked-prod/'
       } ] },
     },
@@ -133,15 +127,6 @@ module.exports = function(grunt) {
           './crxmake.sh build/unpacked-prod ./chrome-key.pem',
           'mv -v ./unpacked-prod.crx build/' + pkg.name + '-' + pkg.version + '.crx'
         ].join(' && ')
-      }
-    },
-
-    uglify: {
-      chrome: {
-        files: fileMaps.uglify.chrome
-      },
-      firefox: {
-        files: fileMaps.uglify.firefox
       }
     },
 
@@ -219,13 +204,13 @@ module.exports = function(grunt) {
   //
 
   grunt.registerTask('chrome', ['clean', 'test', 'mkdir:unpacked', 'copy:chrome_dev', 'manifest:chrome',
-    'mkdir:js', 'browserify:chrome', 'copy:prod', 'uglify:chrome', 'exec']);
+    'mkdir:js', 'browserify:chrome', 'copy:prod', 'exec']);
 
 
   //
   // Firefox build
   //
   grunt.registerTask('firefox', ['clean', 'test', 'mkdir:unpacked', 'copy:firefox_dev', 'manifest:firefox',
-     'mkdir:data_js', 'browserify:firefox', 'copy:prod', 'uglify:firefox', 'jpm:xpi']);
+     'mkdir:data_js', 'browserify:firefox', 'copy:prod', 'jpm:xpi']);
 
 };
