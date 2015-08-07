@@ -7,8 +7,8 @@ Firefox and Chrome extension that adds a right-click menu option to toggle cance
 ### Requirements
 
 - install ```node.js``` and ```grunt```
-- Clone the repo
-- ```npm install```` to get all depedencies
+- clone the repo
+- ```npm install``` to get all dependencies
 
 ### Extensions
 
