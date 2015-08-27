@@ -1,5 +1,5 @@
 # High
-  -
+  - [ff][chrome] make sure we work well with BetterTTV
 
 # Normal
   - [test] use Sinon to mock deep calls
