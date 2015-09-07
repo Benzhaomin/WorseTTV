@@ -19,7 +19,8 @@
     "scripts": [
       "js/chrome-background.js",
       "js/chrome-ui.js"
-    ]
+    ],
+    "persistent": false
   },
   "permissions": [
     "http://www.twitch.tv/*",

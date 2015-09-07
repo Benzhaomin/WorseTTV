@@ -36,6 +36,7 @@
   };
 
   // clear the state on url change/reload
+  // TODO: use chrome.webNavigation.*
   chrome.tabs.onUpdated.addListener(function(tab , info) {
     if (info.status === "loading") {
       delete states[tab];
