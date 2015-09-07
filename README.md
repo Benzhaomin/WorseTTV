@@ -1,7 +1,12 @@
 # Twitch No Cancerino
 
-[Firefox](https://addons.mozilla.org/en-US/firefox/addon/twitch-no-cancerino/?src=github) and Chrome extension that adds a right-click menu option to toggle cancer on/off in Twitch's chat.
-[Install for Firefox](https://addons.mozilla.org/en-US/firefox/addon/twitch-no-cancerino/?src=github).
+[Firefox](https://addons.mozilla.org/en-US/firefox/addon/twitch-no-cancerino/?src=github) and
+[Chrome](https://chrome.google.com/webstore/detail/twitch-no-cancerino/keojkpedpfobepecfbdimdcaibpacdfi) extension
+that adds a right-click menu option to toggle cancer on/off in Twitch's chat.
+
+See it in action on [robots](https://gyazo.com/bd5a118c2ff7e207e01ef1a43a4b8d7b) and on [spam](https://gyazo.com/1baf918ad4eb32762189b09cea6b1e06).
+
+To learn more about cancer on Twitch, check out [Twitch Cancer Monitor](http://cancer.wainei.net).
 
 ## Building
 
