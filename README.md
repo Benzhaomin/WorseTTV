@@ -6,7 +6,7 @@ that adds a right-click menu option to toggle cancer on/off in Twitch's chat.
 
 See it in action on [robots](https://gyazo.com/bd5a118c2ff7e207e01ef1a43a4b8d7b) and on [spam](https://gyazo.com/1baf918ad4eb32762189b09cea6b1e06).
 
-To learn more about cancer on Twitch, check out [cancerino.info](http://cancerino.info).
+To learn more about cancer on Twitch, check out [cancerino.info](https://cancerino.info).
 
 ## Building
 
