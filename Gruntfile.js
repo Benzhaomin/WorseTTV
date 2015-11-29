@@ -188,7 +188,7 @@ module.exports = function(grunt) {
       }
 
       grunt.file.write('build/unpacked-dev/package.json', JSON.stringify(firefox_package, null, 4) + '\n');
-      grunt.log.ok('firefox manifest.json generated');
+      grunt.log.ok('firefox package.json generated');
     }
   );
 
