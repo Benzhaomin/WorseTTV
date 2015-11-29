@@ -1,5 +1,6 @@
 {
   "main": "data/js/firefox-background.js",
+  "multiprocessCompatible": true,
   "engines": {
     "firefox": ">=38.0a1",
     "fennec": ">=38.0a1"
