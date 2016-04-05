@@ -31,7 +31,7 @@ var pageWorkers = [];
 
 // enhance pages on Twitch.tv
 mod.PageMod({
-  include: "http://www.twitch.tv/*",
+  include: "https://www.twitch.tv/*",
   contentScriptFile: [
     self.data.url("js/firefox-chat.js"),
   ],
@@ -84,4 +84,4 @@ cm.Item({
   },
 });
 
-//tabs.open("http://www.twitch.tv/gamesdonequick");
+//tabs.open("https://www.twitch.tv/gamesdonequick");

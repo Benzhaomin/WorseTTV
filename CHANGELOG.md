@@ -1,3 +1,7 @@
+# WorseTTV 1.0.3 (2016/04/05)
+  - [new] e10s support for Firefox.
+  - [fix] Twitch finally switched to https.
+
 # WorseTTV 1.0.2 (2015/09/07)
   - [new] Do a minimum of styling and don't alter valid messages at all
 

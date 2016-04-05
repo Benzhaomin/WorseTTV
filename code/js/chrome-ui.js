@@ -52,7 +52,7 @@
       "id": _context_menu_id,
       "title": "Toggle Cancer",
       "contexts":["page"],
-      "documentUrlPatterns": ["http://www.twitch.tv/*"],
+      "documentUrlPatterns": ["https://www.twitch.tv/*"],
     });
   });
 
