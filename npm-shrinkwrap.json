@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "grunt-jpm-modern": {
+      "version": "0.3.0",
+      "from": "grunt-jpm-modern@0.3.0",
+      "dependencies": {
+        "grunt": {
+          "version": "~1.0.0",
+          "from": "grunt@~0.4.0"
+        }
+      }
+    }
+  }
+}
