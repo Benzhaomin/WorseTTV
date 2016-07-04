@@ -3,16 +3,8 @@ var message = require('./message');
 
 module.exports = (function() {
 
-  // observe the DOM and report addition of nodes
-  var _observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-      Array.prototype.slice.call(mutation.addedNodes).forEach(function(node) {
-        if (node instanceof Element) {
-          _on_new_node(node);
-        }
-      });
-    });
-  });
+  // function to be called for node processing
+  var _callback = null;
 
   // react to the addition of a single new node
   var _on_new_node = function(node) {
@@ -29,8 +21,16 @@ module.exports = (function() {
     }
   };
 
-  // function to be called for node processing
-  var _callback = null;
+  // observe the DOM and report addition of nodes
+  var _observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      Array.prototype.slice.call(mutation.addedNodes).forEach(function(node) {
+        if (node instanceof Element) {
+          _on_new_node(node);
+        }
+      });
+    });
+  });
 
   // apply our local css styling
   var _apply_worse_css = function(toggle) {
