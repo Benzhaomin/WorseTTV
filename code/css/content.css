@@ -25,7 +25,7 @@
 }
 
 /* show sane chat lines */
-.ember-chat.worsettv .sane .chat-line {
+.ember-chat.worsettv .sane.chat-line {
   display: block;
   opacity: 1;
 }
