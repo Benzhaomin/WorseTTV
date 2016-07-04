@@ -62,7 +62,7 @@ module.exports = (function() {
       text = text.replace(image.outerHTML, image.alt);
     });
 
-    return text;
+    return text.trim();
   };
 
   // returns the message's author's username

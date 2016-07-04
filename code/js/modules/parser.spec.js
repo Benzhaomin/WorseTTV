@@ -126,6 +126,13 @@ describe('parser module', function() {
       assert.equal(message, parser.get_message(node));
     });
 
+    it('strips spaces', function() {
+      var message = '                 forsen forsen       ';
+      var node = get_test_node({'{MESSAGE}': message});
+
+      assert.equal(message.trim(), parser.get_message(node));
+    });
+
     it('parses text and replaces emotes', function() {
       var message = 'forsen <img class="emoticon tooltip" src="http://static-cdn.jtvnw.net/emoticons/v1/25/1.0" alt="Kappa" title="Kappa">';
       var node = get_test_node({'{MESSAGE}': message});
