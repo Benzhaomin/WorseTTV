@@ -1,3 +1,8 @@
+# WorseTTV 1.0.4 (2016/07/04)
+  - [fix] chat messages are trimmed before being diagnosed.
+  - [fix] the sane css class was never applied anymore (chat DOM changed).
+  - [dev] updated dependencies (grunt 1.0, browserify 13, etc).
+
 # WorseTTV 1.0.3 (2016/04/05)
   - [new] e10s support for Firefox.
   - [fix] Twitch finally switched to https.
