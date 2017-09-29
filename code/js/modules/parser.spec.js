@@ -17,7 +17,7 @@
 */
 
 var assert = require("assert");
-var jsdom = require('mocha-jsdom');
+var jsdom = require('jsdom-global');
 var parser = require('./parser');
 
 var get_test_node = function(args) {
