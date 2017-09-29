@@ -12,7 +12,7 @@
         "css/content.css"
       ],
       "js": [
-        "js/chrome-chat.js"
+        "js/webext-chat.js"
       ]
   }],
   "background": {

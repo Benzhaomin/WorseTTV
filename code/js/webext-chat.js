@@ -49,9 +49,3 @@ chrome.runtime.onMessage.addListener(
     }
   }
 );
-
-/*
-self.port.on("detach", function() {
-  worsettv.chat.observer.stop();
-});
-*/
