@@ -36,17 +36,21 @@ module.exports = (function() {
   var _apply_worse_css = function(toggle) {
     var chatbox = document.querySelector('.ember-chat');
 
-    if (!chatbox) { return; }
+    if (!chatbox) {
+      console.log("[chat] no chat container found on " + document.title + " " + document.URL);
+      return;
+    }
 
     chatbox.classList.toggle("worsettv", toggle);
   };
 
   // observe addition to the chat's DOM, run a callback for each new message
   var start_observing = function(callback) {
+    var domQuery = document.querySelector('.chat-lines');
 
     // abort if there's no chat to observe
-    if (document.querySelector('.chat-lines') == null) {
-      console.log("[chat] nothing to be observed on " + document.title + " " + document.URL);
+    if (domQuery == null) {
+      console.log("[chat] no chat lines found on " + document.title + " " + document.URL);
       return;
     }
 
@@ -54,7 +58,7 @@ module.exports = (function() {
     _callback = callback;
 
     // start observing the DOM
-    _observer.observe(document.querySelector('.chat-lines'), { childList: true });
+    _observer.observe(domQuery, { childList: true });
     //console.log("[chat] starting to observe " + document.title + " " + document.URL);
 
     // apply our custom css while the observer runs

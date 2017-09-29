@@ -20,18 +20,18 @@ var chat = require('./modules/chat');
 var message = require('./modules/message');
 
 var on_chat_message = function(msg) {
-  //console.log("[chrome-chat] emit(worsettv.diagnose): " + msg + ' ' + msg.text);
+  //console.log("[webext-chat] emit(worsettv.diagnose): " + msg + ' ' + msg.text);
+  msg._node = null; // msg has to be serializable to JSON
 
   chrome.runtime.sendMessage({
-    "message": "worsettv.message.diagnose",
-    "msg": msg
+    message: "worsettv.message.diagnose",
+    msg: msg
   });
 };
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-
-    //console.log('[chrome-chat] ' + request.message);
+    //console.log('[webext-chat] ' + request.message);
 
     if (request.message === "worsettv.message.ill") {
       // rebuild a message object after it has been deserialized by message passing

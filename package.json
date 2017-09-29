@@ -29,7 +29,7 @@
     "node": "*"
   },
   "scripts": {
-    "start:firefox": "web-ext run --source-dir ./build/unpacked-prod/"
+    "start:firefox": "web-ext run --source-dir ./build/unpacked-dev/"
   },
   "export-symbol": "worseTTV.exports"
 }

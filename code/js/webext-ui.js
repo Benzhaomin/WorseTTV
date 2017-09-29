@@ -17,7 +17,6 @@
 */
 
 (function(chrome) {
-
   // keep track of the on/off toggle for each tab
   var states = {};
 
@@ -36,7 +35,7 @@
   };
 
   // clear the state on url change/reload
-  // TODO: use chrome.webNavigation.*
+  // TODO: use browser.webNavigation.*
   chrome.tabs.onUpdated.addListener(function(tab , info) {
     if (info.status === "loading") {
       delete states[tab];
@@ -58,22 +57,23 @@
 
   // react to clicks in the context menu
   chrome.contextMenus.onClicked.addListener(function(info, tab) {
-
     // ignore other menus
     if (info.menuItemId !== _context_menu_id) {
       return;
     }
 
+    var msg;
+
     if (!is_started(tab.id)) {
-      //console.log("[chrome-ui] start curing plz");
-      chrome.tabs.sendMessage(tab.id, {"message": "worsettv.chat.observer.start"});
+      //console.log("[webext-ui] start curing plz");
+      msg = "worsettv.chat.observer.start";
     }
     else {
-      //console.log("[chrome-ui] stop curing plz");
-      chrome.tabs.sendMessage(tab.id, {"message": "worsettv.chat.observer.stop"});
+      //console.log("[webext-ui] stop curing plz");
+      msg = "worsettv.chat.observer.stop";
     }
 
+    chrome.tabs.sendMessage(tab.id, {"message": msg});
     toggle_state(tab.id);
   });
-
 })(chrome);

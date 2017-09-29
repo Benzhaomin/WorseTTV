@@ -35,7 +35,7 @@ module.exports = function(grunt) {
     jshint: {
       options: grunt.file.readJSON('lint-options.json'), // see http://www.jshint.com/docs/options/
       all: { src: ['package.json', 'lint-options.json', 'Gruntfile.js', 'code/**/*.js',
-                   'code/**/*.json', '!code/js/libs/*'] }
+                   'code/**/*.json', '!code/js/libs/*'] },
     },
 
     mochaTest: {
@@ -86,7 +86,7 @@ module.exports = function(grunt) {
                 "chrome-crx"
             ],
             "files": {
-                "build": ["code"]
+                "build": ["build/unpacked-dev/"]
             }
         },
         "firefox": {

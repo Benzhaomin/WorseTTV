@@ -17,8 +17,8 @@
   }],
   "background": {
     "scripts": [
-      "js/chrome-background.js",
-      "js/chrome-ui.js"
+      "js/webext-background.js",
+      "js/webext-ui.js"
     ],
     "persistent": false
   },
