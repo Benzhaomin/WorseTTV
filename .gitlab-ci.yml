@@ -1,0 +1,10 @@
+test:
+  image: node:slim
+  before_script:
+    - npm install
+    - npm install -g grunt
+  script:
+    - grunt test
+  cache:
+    paths:
+      - node_modules/
