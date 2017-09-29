@@ -22,10 +22,14 @@
     "grunt-webext-builder": "^0.1.0",
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
-    "mocha": "^3.5.3"
+    "mocha": "^3.5.3",
+    "web-ext": "^2.0.0"
   },
   "engines": {
     "node": "*"
+  },
+  "scripts": {
+    "start:firefox": "web-ext run --source-dir ./build/unpacked-prod/"
   },
   "export-symbol": "worseTTV.exports"
 }
