@@ -1,6 +1,6 @@
 /**
   Twitch No Cancerino, a browser extension to filter cancer out of Twitch's chat.
-  Copyright (C) 2015 Benjamin Maisonnas
+  Copyright (C) 2015-2017 Benjamin Maisonnas
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
