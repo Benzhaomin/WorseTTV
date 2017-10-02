@@ -1,14 +1,12 @@
 module.exports = function(grunt) {
 
   var pkg = grunt.file.readJSON('package.json');
-  var chrome_manifest = grunt.file.readJSON('code/manifest.json');
-  var firefox_package = grunt.file.readJSON('code/package.json');
+  var manifest = grunt.file.readJSON('code/manifest.json');
 
   // build browser-specific lists of in/out paths for js files
   var fileMaps = {
     browserify: {
-      chrome: {},
-      firefox: {}
+      webext: {}
     }
   };
 
@@ -17,15 +15,7 @@ module.exports = function(grunt) {
 
   for (var i = 0; i < files.length; i++) {
     file = files[i];
-
-    // chrome-* files
-    if (file.indexOf('chrome-') > -1) {
-      fileMaps.browserify.chrome['build/unpacked-dev/js/' + file] = 'code/js/' + file;
-    }
-    // firefox-* files
-    else if (file.indexOf('firefox-') > -1) {
-      fileMaps.browserify.firefox['build/unpacked-dev/data/js/' + file] = 'code/js/' + file;
-    }
+    fileMaps.browserify.webext['build/unpacked-dev/js/' + file] = 'code/js/' + file;
   }
 
   //
@@ -45,7 +35,7 @@ module.exports = function(grunt) {
     jshint: {
       options: grunt.file.readJSON('lint-options.json'), // see http://www.jshint.com/docs/options/
       all: { src: ['package.json', 'lint-options.json', 'Gruntfile.js', 'code/**/*.js',
-                   'code/**/*.json', '!code/js/libs/*'] }
+                   'code/**/*.json', '!code/js/libs/*'] },
     },
 
     mochaTest: {
@@ -54,34 +44,13 @@ module.exports = function(grunt) {
     },
 
     copy: {
-
-      // exclude firefox's package.json
-      chrome_dev: { files: [ {
+      dev: { files: [ {
           expand: true,
           cwd: 'code/',
-          src: ['**', '!js/**', '!**/*.md', '!package.json', '!images/logo-source.png',],
+          src: ['**', '!js/**', '!**/*.md', '!images/logo-source.png',],
           dest: 'build/unpacked-dev/'
       } ] },
 
-      // exclude chrome's manifest.json and move files to a data/ sub-dir
-      firefox_dev: { files: [ {
-          expand: true,
-          cwd: 'code/',
-          src: ['**', '!js/**', '!**/*.md', '!manifest.json', '!images/logo-source.png', '!images/icon.png'],
-          dest: 'build/unpacked-dev/data/'
-        }, {
-          expand: true,
-          cwd: 'code/',
-          src: ['package.json'],
-          dest: 'build/unpacked-dev/'
-      }, {
-          expand: true,
-          cwd: 'code/images/',
-          src: ['icon.png'],
-          dest: 'build/unpacked-dev/'
-      } ] },
-
-      // copy everything except js files (later uglified)
       prod: { files: [ {
         expand: true,
         cwd: 'build/unpacked-dev/',
@@ -91,42 +60,14 @@ module.exports = function(grunt) {
     },
 
     browserify: {
-
-      chrome: {
-        files: fileMaps.browserify.chrome,
+      webext: {
+        files: fileMaps.browserify.webext,
         options: {
           browserifyOptions: {
             debug: true, // for source maps
             standalone: pkg['export-symbol']
-          },
+          }
         }
-      },
-
-      firefox: {
-        files: fileMaps.browserify.firefox,
-        options: {
-          browserifyOptions: {
-            debug: true, // for source maps
-            standalone: pkg['export-symbol']
-          },
-          // exclude Firefox's SDK, it'll be there at runtime
-          exclude: [
-            'sdk/self',
-            'sdk/tabs',
-            'sdk/page-mod',
-            'sdk/util/array',
-            'sdk/context-menu'
-          ],
-        }
-      }
-    },
-
-    exec: {
-      crx: {
-        cmd: [
-          './crxmake.sh build/unpacked-prod ./chrome-key.pem',
-          'mv -v ./unpacked-prod.crx build/' + pkg.name + '-' + pkg.version + '.crx'
-        ].join(' && ')
       }
     },
 
@@ -138,13 +79,27 @@ module.exports = function(grunt) {
       }
     },
 
-    jpm: {
-      options: {
-        src: "./build/unpacked-prod/",
-        xpi: "./build/"
-      }
-    }
-
+    webext_builder: {
+        "chrome": {
+            "privateKey": "chrome-key.pem",
+            "targets": [
+                "chrome-crx"
+            ],
+            "files": {
+                "build": ["build/unpacked-dev/"]
+            }
+        },
+        "firefox": {
+            "jwtIssuer": process.env.jwtIssuer,
+            "jwtSecret": process.env.jwtSecret,
+            "targets": [
+                "firefox-xpi"
+            ],
+            "files": {
+                "build": ["build/unpacked-dev/"]
+            }
+        }
+    },
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -155,39 +110,25 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-jpm-modern');
+  grunt.loadNpmTasks('grunt-webext-builder');
 
   //
   // custom tasks
   //
 
   grunt.registerTask(
-    'manifest:chrome', 'Extend Chrome\'s manifest.json with extra fields from the root package.json',
-    function() {
-      var fields = ['author', 'name', 'version', 'description'];
-      for (var i = 0; i < fields.length; i++) {
-        var field = fields[i];
-        chrome_manifest[field] = pkg[field];
-      }
-
-      chrome_manifest.name = pkg.title;
-
-      grunt.file.write('build/unpacked-dev/manifest.json', JSON.stringify(chrome_manifest, null, 4) + '\n');
-      grunt.log.ok('chrome manifest.json generated');
-    }
-  );
-
-  grunt.registerTask(
-    'manifest:firefox', 'Extend Firefox\'s package.json with extra fields from the root package.json',
+    'manifest', 'Extend manifest.json with extra fields from the package.json',
     function() {
       var fields = ['title', 'author', 'name', 'license', 'version', 'description'];
       for (var i = 0; i < fields.length; i++) {
         var field = fields[i];
-        firefox_package[field] = pkg[field];
+        manifest[field] = pkg[field];
       }
 
-      grunt.file.write('build/unpacked-dev/package.json', JSON.stringify(firefox_package, null, 4) + '\n');
-      grunt.log.ok('firefox package.json generated');
+      manifest.name = pkg.title;
+
+      grunt.file.write('build/unpacked-dev/manifest.json', JSON.stringify(manifest, null, 4) + '\n');
+      grunt.log.ok('manifest.json generated');
     }
   );
 
@@ -202,14 +143,14 @@ module.exports = function(grunt) {
   // Chrome build
   //
 
-  grunt.registerTask('chrome', ['clean', 'test', 'mkdir:unpacked', 'copy:chrome_dev', 'manifest:chrome',
-    'mkdir:js', 'browserify:chrome', 'copy:prod', 'exec']);
+  grunt.registerTask('chrome', ['clean', 'test', 'mkdir:unpacked', 'copy:dev', 'manifest',
+    'mkdir:js', 'browserify:webext', 'copy:prod', 'webext_builder:chrome']);
 
 
   //
   // Firefox build
   //
-  grunt.registerTask('firefox', ['clean', 'test', 'mkdir:unpacked', 'copy:firefox_dev', 'manifest:firefox',
-     'mkdir:data_js', 'browserify:firefox', 'copy:prod', 'jpm:xpi']);
+  grunt.registerTask('firefox', ['clean', 'test', 'mkdir:unpacked', 'copy:dev', 'manifest',
+     'mkdir:data_js', 'browserify:webext', 'copy:prod', 'webext_builder:firefox']);
 
 };

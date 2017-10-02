@@ -1,6 +1,6 @@
 /**
   Twitch No Cancerino, a browser extension to filter cancer out of Twitch's chat.
-  Copyright (C) 2015 Benjamin Maisonnas
+  Copyright (C) 2015-2017 Benjamin Maisonnas
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 module.exports = (function() {
 
   // plain list of global emotes
+  // TODO: update this list
   var _emotes = ['4Head','ANELE','ArgieB8','ArsonNoSexy','AsianGlow','AtGL','AthenaPMS','AtIvy','AtWW','BabyRage','BatChest','BCWarrior','BibleThump','BigBrother','BionicBunion','BlargNaut','BloodTrail','BORT','BrainSlug','BrokeBack','BuddhaBar','CoolCat','CorgiDerp','CougarHunt','DAESuppy','DansGame','DatHass','DatSheffy','DBstyle','deExcite','deIlluminati','DendiFace','DogFace','DOOMGuy','EagleEye','EleGiggle','EvilFetus','FailFish','FPSMarksman','FrankerZ','FreakinStinkin','FUNgineer','FunRun','FuzzyOtterOO','GasJoker','GingerPower','GrammarKing','HassanChop','HeyGuys','HeyyyLulu','HotPokket','HumbleLife','ItsBoshyTime','Jebaited','JKanStyle','JonCarnage','KAPOW','Kappa','KappaPride','Keepo','KevinTurtle','Kippa','Kreygasm','KreyGasm','KZskull','Mau5','mcaT','MechaSupes','MrDestructoid','MVGame','NightBat','NinjaTroll','NoNoSpot','NotAtk','OMGScoots','OneHand','OpieOP','OptimizePrime','OSbeaver','OSbury','OSdeo','OSfrog','OSkomodo','OSrob','OSsloth','panicBasket','PanicVis','PazPazowitz','PeoplesChamp','PermaSmug','PicoMause','PipeHype','PJHarley','PJSalt','PMSTwin','PogChamp','Poooound','PraiseIt','PRChase','PunchTrees','PuppeyFace','RaccAttack','RalpherZ','RedCoat','ResidentSleeper','RitzMitz','RuleFive','Shazam','shazamicon','ShazBotstix','ShibeZ','SMOrc','SMSkull','SoBayed','SoonerLater','SriHead','SSSsss','StoneLightning','StrawBeary','SuperVinlin','SwiftRage','tbBaconBiscuit','tbChickenBiscuit','tbQuesarito','tbSausageBiscuit','tbSpicy','tbSriracha','TF2John','TheKing','TheRinger','TheTarFu','TheThing','ThunBeast','TinyFace','TooSpicy','TriHard','TTours','UleetBackup','UncleNox','UnSane','VaultBoy','Volcania','WholeWheat','WinWaker','WTRuck','WutFace','YouWHY','FeelsBadMan','BibleThump','KKona','GabeN','SourPls','ditto','(ditto)','FeelsGoodMan','LUL','VapeNation','VoHiYo','gachiGASM'];
 
   // long string with all emotes concatenated

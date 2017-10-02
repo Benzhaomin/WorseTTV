@@ -1,6 +1,6 @@
 /**
   Twitch No Cancerino, a browser extension to filter cancer out of Twitch's chat.
-  Copyright (C) 2015 Benjamin Maisonnas
+  Copyright (C) 2015-2017 Benjamin Maisonnas
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -20,29 +20,22 @@ var diagnosis = require('./modules/diagnosis');
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-
-    //console.log('[chrome-background] ' + request.message);
-
+    //console.log('[webext-background] ' + request.message);
     if (request.message === "worsettv.message.diagnose") {
+      var tab_message = {"msg": request.msg};
 
-      //console.log('[chrome-background] diagnosis request for text ' + request.msg.text + ' on node ' + request.msg.id);
+      //console.log('[webext-background] diagnosis request for text ' + request.msg.text + ' on node ' + request.msg.id);
 
       if (!diagnosis.cancer(request.msg)) {
-        //console.log('[chrome-background] sane message here');
-
-        chrome.tabs.sendMessage(sender.tab.id, {
-          "message": "worsettv.message.sane",
-          "msg": request.msg
-        });
+        //console.log('[webext-background] sane message here');
+        tab_message.message = "worsettv.message.sane";
       }
       else {
-        //console.log('[chrome-background] ill message here');
-
-        chrome.tabs.sendMessage(sender.tab.id, {
-          "message": "worsettv.message.ill",
-          "msg": request.msg
-        });
+        //console.log('[webext-background] ill message here');
+        tab_message.message = "worsettv.message.ill";
       }
+
+      chrome.tabs.sendMessage(sender.tab.id, tab_message);
     }
   }
 );

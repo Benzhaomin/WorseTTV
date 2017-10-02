@@ -1,3 +1,20 @@
+/**
+  Twitch No Cancerino, a browser extension to filter cancer out of Twitch's chat.
+  Copyright (C) 2015-2017 Benjamin Maisonnas
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/gpl-3.0.en.html>.
+*/
 
 var message = require('./message');
 
@@ -36,17 +53,21 @@ module.exports = (function() {
   var _apply_worse_css = function(toggle) {
     var chatbox = document.querySelector('.ember-chat');
 
-    if (!chatbox) { return; }
+    if (!chatbox) {
+      console.log("[chat] no chat container found on " + document.title + " " + document.URL);
+      return;
+    }
 
     chatbox.classList.toggle("worsettv", toggle);
   };
 
   // observe addition to the chat's DOM, run a callback for each new message
   var start_observing = function(callback) {
+    var domQuery = document.querySelector('.chat-lines');
 
     // abort if there's no chat to observe
-    if (document.querySelector('.chat-lines') == null) {
-      console.log("[chat] nothing to be observed on " + document.title + " " + document.URL);
+    if (domQuery == null) {
+      console.log("[chat] no chat lines found on " + document.title + " " + document.URL);
       return;
     }
 
@@ -54,7 +75,7 @@ module.exports = (function() {
     _callback = callback;
 
     // start observing the DOM
-    _observer.observe(document.querySelector('.chat-lines'), { childList: true });
+    _observer.observe(domQuery, { childList: true });
     //console.log("[chat] starting to observe " + document.title + " " + document.URL);
 
     // apply our custom css while the observer runs

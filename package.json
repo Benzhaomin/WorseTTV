@@ -1,7 +1,7 @@
 {
   "title": "Twitch No Cancerino",
   "name": "worsettv",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Adds a right-click menu option to toggle cancer on/off in Twitch's chat.",
   "author": "Benjamin Maisonnas",
   "id": "ben@wainei.net",
@@ -9,23 +9,27 @@
   "license": "GPL-3.0",
   "dependencies": {},
   "devDependencies": {
-    "browserify": "~13.0.1",
-    "grunt": "~1.0.1",
-    "grunt-browserify": "~5.0.0",
-    "grunt-contrib-clean": "~1.0.0",
-    "grunt-contrib-copy": "~1.0.0",
-    "grunt-contrib-jshint": "~1.0.0",
-    "grunt-contrib-watch": "~1.0.0",
-    "grunt-exec": "~1.0.0",
-    "grunt-jpm-modern": "*",
-    "grunt-mkdir": "~1.0.0",
-    "grunt-mocha-test": "*",
-    "jsdom": "~9.4.0",
-    "mocha": "~2.5.3",
-    "mocha-jsdom": "*"
+    "browserify": "^13.0.1",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.2.0",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-exec": "^3.0.0",
+    "grunt-mkdir": "^1.0.0",
+    "grunt-mocha-test": "^0.13.2",
+    "grunt-webext-builder": "^0.1.0",
+    "jsdom": "11.2.0",
+    "jsdom-global": "3.0.2",
+    "mocha": "^3.5.3",
+    "web-ext": "^2.0.0"
   },
   "engines": {
     "node": "*"
+  },
+  "scripts": {
+    "start:firefox": "web-ext run --source-dir ./build/unpacked-dev/"
   },
   "export-symbol": "worseTTV.exports"
 }

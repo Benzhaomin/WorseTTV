@@ -12,13 +12,13 @@
         "css/content.css"
       ],
       "js": [
-        "js/chrome-chat.js"
+        "js/webext-chat.js"
       ]
   }],
   "background": {
     "scripts": [
-      "js/chrome-background.js",
-      "js/chrome-ui.js"
+      "js/webext-background.js",
+      "js/webext-ui.js"
     ],
     "persistent": false
   },

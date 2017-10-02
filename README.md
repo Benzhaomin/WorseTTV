@@ -16,6 +16,10 @@ To learn more about cancer on Twitch, check out [cancerino.info](https://canceri
 - clone the repo
 - ```npm install``` to get all dependencies
 
+### Tests
+
+```grunt test```
+
 ### Extensions
 
 ```grunt chrome``` to build the Chrome extension. You need a key to sign the .crx but you can also just test it unpacked in Chrome.
