@@ -1,3 +1,7 @@
+# WorseTTV 1.1.0 (2017/10/xx)
+  - [dev] removed FF and chrome specific code, WebExt ftw.
+  - [dev] updated dependencies.
+
 # WorseTTV 1.0.4 (2016/07/04)
   - [fix] chat messages are trimmed before being diagnosed.
   - [fix] the sane css class was never applied anymore (chat DOM changed).
